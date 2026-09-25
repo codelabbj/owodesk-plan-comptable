@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Comptable OHADA — par OwoDesk</title>
+<meta name="description" content="Plan Comptable OHADA (SYSCOHADA) complet, interactif et recherchable. Un outil gratuit OwoDesk pour comptables, étudiants et entreprises.">
+<link rel="icon" type="image/png" href="./logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== OwoDesk marketing style : éditorial, bords vifs ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f9f8f6; --bg-alt:#f0ede9; --bg-hi:#ffffff;
+  --ink:#14110d; --ink-2:#3e3831; --ink-3:#5e5650;
+  --muted:#827a74; --line:#e2ddd7; --line-2:#c8c0b8;
+  --plate:#14110d; --plate-2:#27221d; --on-plate:#f9f8f6;
+  --brand:#e8450a;
+  --font:"Archivo",Helvetica,sans-serif;
+  --display:"Bricolage Grotesque","Archivo",sans-serif;
+  --mono:"IBM Plex Mono",monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+::selection{background:var(--brand);color:#fff}
+a{color:var(--brand);text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px}
+.display{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.kicker i{width:8px;height:8px;background:var(--brand);flex-shrink:0;font-style:normal}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font);font-weight:600;border:0;cursor:pointer;text-decoration:none;white-space:nowrap;border-radius:0}
+.btn-primary{background:var(--brand);color:var(--on-plate)}
+.btn-primary:hover{background:var(--plate);color:var(--on-plate)}
+.btn-ghost{border:1px solid var(--plate);color:var(--ink);background:transparent}
+.btn-ghost:hover{background:var(--plate);color:var(--on-plate)}
+.btn-md{font-size:14px;padding:11px 18px}
+.btn-lg{font-size:16px;padding:16px 26px}
+/* ===== Header (identique landing OwoDesk) ===== */
+.mkt-header{position:sticky;top:0;z-index:50;background:rgba(249,248,246,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.mkt-header-inner{max-width:1280px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;gap:28px}
+.mkt-logo{display:flex;align-items:center;gap:10px;color:var(--ink)!important;flex-shrink:0}
+.mkt-logo img{height:26px;width:auto;display:block}
+.mkt-logo-text{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mkt-nav{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:14px;font-weight:500;white-space:nowrap}
+.mkt-nav a{color:var(--ink-2)}
+.mkt-nav a:hover,.mkt-nav a.is-active{color:var(--brand)}
+.mkt-header-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.mkt-header-login{font-size:14px;font-weight:500;color:var(--ink)!important;border-bottom:1px solid var(--line-2);padding-bottom:2px}
+@media(max-width:900px){.mkt-nav{display:none}}
+/* ===== Hero plein écran ===== */
+.hero{min-height:calc(100svh - 72px);display:flex;align-items:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;background:var(--bg)}
+.hero::before{content:"";position:absolute;top:-120px;right:-120px;width:420px;height:420px;background:var(--bg-alt);border:1px solid var(--line)}
+.hero::after{content:"";position:absolute;bottom:-160px;left:-100px;width:360px;height:360px;background:var(--bg-alt);border:1px solid var(--line)}
+.hero-inner{position:relative;z-index:2;text-align:center;max-width:900px;margin:0 auto;padding:80px 32px 70px}
+.hero h1{font-size:clamp(40px,6.4vw,76px);margin:22px 0 20px}
+.hero h1 .hl{color:var(--brand)}
+.hero .sub{font-size:clamp(15px,2vw,18px);line-height:1.65;color:var(--ink-2);max-width:660px;margin:0 auto}
+.hero .sub strong{color:var(--ink)}
+/* ===== Recherche centrée ===== */
+.search-zone{margin:34px auto 0;max-width:700px;position:relative;text-align:center}
+.search-box{display:flex;align-items:stretch;background:var(--bg-hi);border:1px solid var(--plate);box-shadow:6px 6px 0 var(--plate)}
+.search-box .s-ico{display:flex;align-items:center;padding:0 6px 0 18px;font-size:20px}
+.search-box input{flex:1;border:0;outline:0;background:transparent;font-family:var(--font);font-size:16px;padding:18px 10px;min-width:0;color:var(--ink)}
+.search-box button{background:var(--brand);color:#fff;border:0;border-left:1px solid var(--plate);font-family:var(--font);font-weight:700;font-size:15px;padding:0 28px;cursor:pointer}
+.search-box button:hover{background:var(--plate)}
+.suggest{position:absolute;top:calc(100% + 10px);left:0;right:0;background:#fff;border:1px solid var(--plate);box-shadow:6px 6px 0 var(--plate);display:none;z-index:30;text-align:left;max-height:320px;overflow-y:auto}
+.suggest button{display:flex;width:100%;gap:12px;align-items:center;padding:12px 16px;border:0;border-bottom:1px solid var(--line);background:#fff;cursor:pointer;font-family:var(--font);text-align:left}
+.suggest button:hover{background:var(--bg-alt)}
+.suggest .num{font-family:var(--mono);font-weight:600;background:var(--plate);color:#fff;font-size:12px;padding:4px 8px;white-space:nowrap}
+.suggest .lbl{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tags button{font-family:var(--mono);font-size:12px;letter-spacing:.06em;background:transparent;border:1px solid var(--line-2);color:var(--ink-2);padding:8px 14px;cursor:pointer}
+.tags button:hover{border-color:var(--brand);color:var(--brand)}
+.stats{margin:36px auto 0;display:grid;grid-template-columns:repeat(3,1fr);max-width:640px;border:1px solid var(--plate);background:var(--bg-hi);box-shadow:6px 6px 0 var(--plate)}
+.stat{padding:18px 10px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{font-family:var(--display);font-size:30px;display:block;letter-spacing:-.02em}
+.stat b em{font-style:normal;color:var(--brand)}
+.stat span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.scroll-hint{margin-top:30px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);animation:bounce 1.8s infinite}
+@keyframes bounce{50%{transform:translateY(5px)}}
+/* ===== Résultat centré ===== */
+.result-band{border-bottom:1px solid var(--line);background:var(--bg-alt);padding:54px 0}
+.result-box{max-width:760px;margin:0 auto;text-align:center}
+.result-card{background:var(--plate);color:var(--on-plate);padding:40px 38px;text-align:center;box-shadow:8px 8px 0 var(--brand)}
+.result-card .r-num{font-family:var(--mono);font-size:15px;letter-spacing:.14em;color:#ffb59a;text-transform:uppercase}
+.result-card h2{font-family:var(--display);font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin:12px 0 6px}
+.result-card h2 .n{color:var(--brand);filter:brightness(1.6)}
+.result-card .r-class{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a8a09a}
+.result-rows{margin-top:24px;display:grid;gap:12px;text-align:left}
+.result-rows .rr{background:var(--plate-2);border:1px solid #3a322b;padding:16px 18px;font-size:14.5px;line-height:1.65;color:#e8e2da}
+.result-rows .rr b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;color:#ffb59a}
+.result-rows .rr code{font-family:var(--mono);font-size:12.5px;color:#ffd9c7;background:rgba(232,69,10,.18);padding:1px 6px}
+.result-actions{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.result-actions .btn-ghost{border-color:#3a322b;color:var(--on-plate)}
+.result-actions .btn-ghost:hover{background:var(--brand);border-color:var(--brand)}
+.result-none{background:var(--bg-hi);border:1px solid var(--plate);box-shadow:6px 6px 0 var(--plate);padding:34px;font-size:15px}
+/* ===== Liste ===== */
+.section{padding:64px 0 30px}
+.section-head{display:flex;flex-wrap:wrap;gap:18px;align-items:end;justify-content:space-between;margin-bottom:20px}
+.section-head h2{font-family:var(--display);font-size:clamp(26px,3.6vw,40px);letter-spacing:-.02em}
+.section-head p{color:var(--ink-2);max-width:600px;margin-top:10px;line-height:1.65;font-size:15px}
+.count-pill{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--plate);color:var(--on-plate);padding:10px 18px}
+.count-pill b{color:#ffb59a}
+.filters{position:sticky;top:72px;z-index:20;background:rgba(249,248,246,.94);backdrop-filter:blur(10px);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fbtn{flex:0 0 auto;font-family:var(--mono);font-size:12px;letter-spacing:.06em;background:var(--bg-hi);border:1px solid var(--line-2);color:var(--ink-2);padding:10px 16px;cursor:pointer;text-transform:uppercase}
+.fbtn:hover{border-color:var(--plate);color:var(--ink)}
+.fbtn.active{background:var(--plate);color:var(--on-plate);border-color:var(--plate)}
+.grid{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+.card{background:var(--bg-hi);border:1px solid var(--line-2);padding:22px;display:flex;flex-direction:column;gap:13px;transition:.15s}
+.card:hover{border-color:var(--plate);box-shadow:5px 5px 0 var(--plate);transform:translate(-2px,-2px)}
+.card-top{display:flex;gap:13px;align-items:flex-start}
+.num{font-family:var(--mono);font-weight:600;font-size:14px;background:var(--plate);color:#fff;padding:8px 11px;white-space:nowrap}
+.num.hit{background:var(--brand)}
+.card h3{font-size:16px;line-height:1.4;font-weight:700}
+.cls{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.use{border:1px dashed var(--line-2);background:var(--bg);padding:11px 13px;font-size:13.8px;line-height:1.6;color:var(--ink-2)}
+.use b{color:var(--brand);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.ex{background:var(--plate);color:#e8e2da;padding:11px 13px;font-size:13px;line-height:1.6}
+.ex b{color:#ffb59a;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.ex code{font-family:var(--mono);font-size:12px;color:#ffd9c7}
+.def{border-left:3px solid var(--brand);background:var(--bg);padding:11px 13px;font-size:13.8px;line-height:1.6;color:var(--ink-2)}
+.def b{color:var(--brand);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+/* tags masqués : ils servent uniquement au moteur de recherche */
+.card-foot{display:flex;gap:8px;margin-top:auto}
+.copy{flex:1;border:1px solid var(--plate);background:transparent;padding:10px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
+.copy:hover{background:var(--plate);color:#fff}
+.empty{border:1px dashed var(--line-2);background:var(--bg-hi);padding:60px 24px;text-align:center;color:var(--muted)}
+.empty b{color:var(--ink);font-family:var(--display);font-size:20px;display:block;margin-bottom:8px}
+/* ===== Footer (style landing OwoDesk) ===== */
+.mkt-footer{background:var(--plate);color:#a8a09a;padding:60px 0 0;margin-top:60px}
+.mkt-footer-grid{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.mkt-footer .mkt-logo{color:var(--on-plate)!important;margin-bottom:14px}
+.mkt-footer p{font-size:14px;line-height:1.7}
+.mkt-footer-col{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.mkt-footer-col-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-plate);margin-bottom:6px}
+.mkt-footer-col a{color:#a8a09a}
+.mkt-footer-col a:hover{color:var(--brand)}
+.mkt-footer-bottom{max-width:1280px;margin:40px auto 0;padding:20px 32px;border-top:1px solid var(--plate-2);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:900px){.mkt-footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.mkt-footer-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}.wrap,.mkt-header-inner{padding:0 18px}.hero-inner{padding:60px 18px 54px}.result-card{padding:28px 20px}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--plate);color:#fff;padding:13px 22px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:99;border:1px solid var(--brand)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header class="mkt-header">
+  <div class="mkt-header-inner">
+    <a class="mkt-logo" href="#"><img src="./logo.png" alt="OwoDesk"><span class="mkt-logo-text">OwoDesk</span></a>
+    <nav class="mkt-nav" aria-label="Principal">
+      <a href="#resultat">Résultat</a>
+      <a href="#liste" class="is-active">Plan comptable</a>
+      <a href="#classes">Classes 1 – 8</a>
+      <a href="https://www.owo.bj/" target="_blank" rel="noopener">OwoDesk ↓</a>
+    </nav>
+    <div class="mkt-header-actions">
+      <a href="https://www.owo.bj/register" target="_blank" rel="noopener" class="btn btn-primary btn-md">Essai gratuit</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="kicker"><i></i> SYSCOHADA révisé · Outil gratuit OwoDesk</span>
+    <h1 class="display">Plan Comptable <span class="hl">OHADA</span>,<br>simple et recherchable.</h1>
+    <p class="sub">Tapez un numéro ou un mot-clé — <strong>« client », « salaire », « caisse », « 521 »…</strong> — le bon compte s'affiche <strong>en grand, centré, juste en bas</strong> avec sa <strong>définition</strong>, son <strong>utilité</strong> et un <strong>exemple d'écriture</strong>. Tous les comptes restent listés plus bas sur la même page.</p>
+    <div class="search-zone">
+      <div class="search-box">
+        <span class="s-ico">⌕</span>
+        <input id="search" type="text" placeholder="Rechercher un compte… ex : 411, client, amortissement, TVA…" autocomplete="off">
+        <button onclick="goResult()">Voir ↓</button>
+      </div>
+      <div class="suggest" id="suggest"></div>
+      <div class="tags">
+        <button onclick="quick('client')">client</button>
+        <button onclick="quick('fournisseur')">fournisseur</button>
+        <button onclick="quick('salaire')">salaire</button>
+        <button onclick="quick('caisse')">caisse</button>
+        <button onclick="quick('TVA')">TVA</button>
+        <button onclick="quick('amortissement')">amortissement</button>
+        <button onclick="quick('emprunt')">emprunt</button>
+        <button onclick="quick('vente')">vente</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b><em id="st-total">0</em></b><span>comptes référencés</span></div>
+      <div class="stat"><b>8</b><span>classes SYSCOHADA</span></div>
+      <div class="stat"><b>17</b><span>pays OHADA</span></div>
+    </div>
+    <div class="scroll-hint">↓ Le résultat s'affiche centré ci-dessous ↓</div>
+  </div>
+</section>
+
+<!-- ===== RÉSULTAT CENTRÉ ===== -->
+<section class="result-band" id="resultat">
+  <div class="wrap result-box">
+    <span class="kicker" style="justify-content:center"><i></i> <span id="result-kicker">Meilleure correspondance — en direct</span></span>
+    <div style="height:18px"></div>
+    <div id="spotlight"></div>
+  </div>
+</section>
+
+<main class="wrap section" id="liste">
+  <div class="section-head" id="classes">
+    <div>
+      <span class="kicker"><i></i> Référentiel complet · Classes 1 à 8</span>
+      <h2 class="display">Tous les comptes, sur la même page.</h2>
+      <p>Chaque carte affiche le <b>numéro</b>, l'<b>intitulé officiel</b>, la <b>définition</b>, l'<b>utilité</b> et un <b>exemple concret</b>. La recherche filtre cette liste sur tous ces champs, y compris les définitions et mots-clés associés, et le meilleur résultat reste affiché en grand dans l'encadré centré.</p>
+    </div>
+    <div class="count-pill"><b id="count">0</b> compte(s) affiché(s)</div>
+  </div>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none"><b>Aucun compte trouvé</b><span id="empty-txt"></span><br><br><button class="btn btn-primary btn-md" onclick="resetSearch()">Réinitialiser la recherche</button></div>
+</main>
+
+<footer class="mkt-footer">
+  <div class="mkt-footer-grid">
+    <div>
+      <a class="mkt-logo" href="#"><img src="./logo.png" alt="OwoDesk"><span class="mkt-logo-text">OwoDesk</span></a>
+      <p><b style="color:#fff">Plan Comptable OHADA</b> — outil gratuit offert par <b style="color:#fff">OwoDesk</b>, l'ERP tout-en-un des entreprises africaines : facturation, stock, caisse, CRM, RH, comptabilité SYSCOHADA et Mobile Money.<br><br>Bénin · Côte d'Ivoire · Sénégal · Cameroun · Togo · Mali…</p>
+    </div>
+    <div class="mkt-footer-col">
+      <span class="mkt-footer-col-title">Classes</span>
+      <a href="#liste">1 — Capitaux durables</a><a href="#liste">2 — Immobilisations</a><a href="#liste">3 — Stocks</a><a href="#liste">4 — Tiers</a><a href="#liste">5 — Trésorerie</a><a href="#liste">6 — Charges</a><a href="#liste">7 — Produits</a><a href="#liste">8 — HAO</a>
+    </div>
+    <div class="mkt-footer-col">
+      <span class="mkt-footer-col-title">Produit</span>
+      <a href="https://www.owo.bj/erp-ohada" target="_blank" rel="noopener">ERP OHADA multi-sociétés</a>
+      <a href="https://www.owo.bj/comptabilite-syscohada" target="_blank" rel="noopener">Comptabilité SYSCOHADA</a>
+      <a href="https://www.owo.bj/facturation-mecef-benin" target="_blank" rel="noopener">Facturation MECeF</a>
+      <a href="https://www.owo.bj/#tarifs" target="_blank" rel="noopener">Tarifs</a>
+    </div>
+    <div class="mkt-footer-col">
+      <span class="mkt-footer-col-title">Société</span>
+      <a href="https://codelab.bj" target="_blank" rel="noopener">CodeLab BJ, éditeur</a>
+      <a href="mailto:hello@codelab.bj">hello@codelab.bj</a>
+      <a href="https://aide.owo.bj" target="_blank" rel="noopener">Centre d'aide</a>
+    </div>
+  </div>
+  <div class="mkt-footer-bottom"><span>© 2026 OwoDesk — édité par CodeLab BJ · Cotonou, Bénin</span><span>Contenu pédagogique — vérifiez avec votre expert-comptable.</span></div>
+</footer>
+<div class="toast" id="toast">Copié !</div>
+
+<script>
+const COMPTES = [
+{n:"101",t:"Capital personnel",c:1,d:"Apport en argent ou en nature effectué par l'exploitant individuel pour constituer les ressources propres de son entreprise. C'est une ressource durable, non remboursable.",g:["capital","apport","exploitant","fonds propres","création"],u:"Enregistre l'apport initial de l'exploitant individuel pour démarrer l'activité.",e:"Ex : apport de 5 000 000 F en banque → Débit <code>521</code> / Crédit <code>101</code>."},
+{n:"1011",t:"Capital souscrit, non appelé",c:1,d:"Partie du capital souscrite par les associés mais dont le versement n'a pas encore été exigé par la société.",g:["capital","souscrit","non appelé","associés","souscription"],u:"Suit la part du capital promise par les associés mais pas encore versée.",e:"Ex : promesse d'apport de 10 000 000 F → Débit <code>109</code> / Crédit <code>1011</code>."},
+{n:"1012",t:"Capital souscrit, appelé, non versé",c:1,d:"Capital appelé par la gérance mais pas encore effectivement versé par les associés. Étape intermédiaire entre l'appel de fonds et l'encaissement.",g:["capital","appelé","non versé","associés","libération"],u:"Enregistre le capital appelé par la société mais pas encore encaissé.",e:"Ex : appel de fonds de 4 000 000 F → Débit <code>109</code> / Crédit <code>1012</code>."},
+{n:"1013",t:"Capital souscrit, appelé, versé",c:1,d:"Capital appelé et effectivement encaissé, mis à la disposition de la société pour financer son activité.",g:["capital","versé","libéré","associés","encaissé"],u:"Capital effectivement libéré et disponible pour l'entreprise.",e:"Ex : versement reçu 4 000 000 F → Débit <code>521</code> / Crédit <code>1013</code>."},
+{n:"105",t:"Primes liées au capital social",c:1,d:"Sommes versées par les nouveaux associés au-delà de la valeur nominale des parts : prime d'émission, d'apport ou de fusion.",g:["prime","émission","apport","fusion","capital"],u:"Enregistre les surplus payés par les nouveaux associés (prime d'émission, d'apport, de fusion).",e:"Ex : prime d'émission de 500 000 F → Crédit <code>105</code>."},
+{n:"109",t:"Actionnaires, capital souscrit non appelé",c:1,d:"Créance de la société sur ses associés, correspondant au capital souscrit mais non encore appelé.",g:["associés","souscrit","non appelé","créance","actionnaires"],u:"Créance sur les associés qui n'ont pas encore libéré leur apport.",e:"Ex : souscription 10 000 000 F → Débit <code>109</code> / Crédit <code>101</code>."},
+{n:"111",t:"Réserve légale",c:1,d:"Réserve obligatoire constituée par prélèvement sur les bénéfices, jusqu'à atteindre 10 % du capital social.",g:["réserve","légale","bénéfice","obligatoire","affectation"],u:"Réserve obligatoire (10% du capital max) prélevée sur les bénéfices.",e:"Ex : affectation bénéfice 200 000 F → Débit <code>131</code> / Crédit <code>111</code>."},
+{n:"112",t:"Réserves statutaires ou contractuelles",c:1,d:"Réserves imposées par les statuts de la société, alimentées par les bénéfices selon les règles statutaires.",g:["réserve","statutaire","statuts","bénéfice"],u:"Réserves prévues par les statuts de la société.",e:"Ex : dotation 300 000 F → Débit <code>131</code> / Crédit <code>112</code>."},
+{n:"118",t:"Autres réserves (facultatives)",c:1,d:"Réserves constituées librement par décision de l'assemblée générale, sans obligation légale ni statutaire.",g:["réserve","facultative","libre","assemblée","bénéfice"],u:"Réserves libres décidées par l'assemblée générale.",e:"Ex : mise en réserve 1 000 000 F du bénéfice."},
+{n:"121",t:"Report à nouveau créditeur (bénéfice antérieur)",c:1,d:"Bénéfice des exercices antérieurs conservé dans la société, ni distribué en dividendes ni mis en réserve.",g:["report","bénéfice","résultat","exercice","dividendes"],u:"Bénéfice des années passées ni distribué ni mis en réserve.",e:"Ex : bénéfice 2024 reporté 2 000 000 F → Crédit <code>121</code>."},
+{n:"129",t:"Report à nouveau débiteur (perte antérieure)",c:1,d:"Perte des exercices antérieurs reportée sur l'avenir, qui viendra diminuer les bénéfices futurs.",g:["report","perte","déficit","exercice"],u:"Perte des années passées reportée sur l'exercice suivant.",e:"Ex : perte 2024 de 800 000 F → Débit <code>129</code>."},
+{n:"131",t:"Résultat net : bénéfice",c:1,d:"Bénéfice dégagé pendant l'exercice : les produits dépassent les charges. Il sera affecté l'année suivante.",g:["résultat","bénéfice","profit","exercice","bénéfice net"],u:"Constate le bénéfice de l'exercice (produits > charges).",e:"Ex : bénéfice 3 500 000 F au 31/12 → Crédit <code>131</code>."},
+{n:"139",t:"Résultat net : perte",c:1,d:"Perte subie pendant l'exercice : les charges dépassent les produits.",g:["résultat","perte","déficit","exercice"],u:"Constate la perte de l'exercice (charges > produits).",e:"Ex : perte 900 000 F → Débit <code>139</code>."},
+{n:"141",t:"Subventions d'investissement reçues",c:1,d:"Aide financière reçue de l'État ou d'un bailleur pour acquérir une immobilisation. Elle est reprise en produits au rythme de l'amortissement du bien.",g:["subvention","investissement","aide","état","équipement"],u:"Aides reçues pour financer des immobilisations (État, bailleurs).",e:"Ex : subvention 5 000 000 F pour machine → Crédit <code>141</code> / Débit <code>521</code>."},
+{n:"148",t:"Autres subventions d'investissement",c:1,d:"Autres aides d'équipement reçues, non classées en 141 : dons d'ONG, partenaires privés.",g:["subvention","don","aide","équipement","ONG"],u:"Autres aides d'équipement non classées ailleurs.",e:"Ex : don d'ONG pour ordinateur → Crédit <code>148</code>."},
+{n:"151",t:"Provisions réglementées",c:1,d:"Provisions à caractère fiscal autorisées par la loi (pour investissement, hausse de prix), distinctes des provisions pour risques.",g:["provision","réglementée","fiscale","impôt"],u:"Provisions à caractère fiscal (ex : pour investissement, hausse de prix).",e:"Ex : provision pour investissement 1 000 000 F → Crédit <code>151</code>."},
+{n:"161",t:"Emprunts obligataires",c:1,d:"Dette à long terme née d'un emprunt lancé par appel public à l'épargne, remboursable aux obligataires.",g:["emprunt","obligataire","dette","obligation","financement"],u:"Dettes issues d'emprunts lancés auprès du public.",e:"Ex : émission emprunt 20 000 000 F → Crédit <code>161</code>."},
+{n:"162",t:"Emprunts et dettes auprès des établissements de crédit",c:1,d:"Prêts bancaires à plus d'un an accordés par les établissements de crédit pour financer durablement l'entreprise.",g:["emprunt","banque","prêt","crédit","financement","dette"],u:"Prêts bancaires à long terme (> 1 an).",e:"Ex : prêt NSIA 10 000 000 F → Débit <code>521</code> / Crédit <code>162</code>. Mensualité : Débit <code>162</code> + <code>671</code> intérêts."},
+{n:"166",t:"Avances reçues de l'État",c:1,d:"Fonds avancés par l'État, remboursables à long terme, pour soutenir le financement de l'entreprise.",g:["état","avance","aide","trésor","financement"],u:"Avances et fonds publics remboursables à long terme.",e:"Ex : avance Trésor 3 000 000 F → Crédit <code>166</code>."},
+{n:"172",t:"Avances reçues, dettes de location-acquisition (crédit-bail immo)",c:1,d:"Dette restant due au crédit-bailleur pour un bien immobilier financé en crédit-bail.",g:["crédit-bail","leasing","immobilier","dette","location"],u:"Dette de crédit-bail immobilier restant à payer.",e:"Ex : contrat crédit-bail bâtiment 30 000 000 F → Crédit <code>172</code>."},
+{n:"173",t:"Dettes de location-acquisition, crédit-bail mobilier",c:1,d:"Dette de leasing restant due pour un bien mobilier (véhicule, machine) financé en crédit-bail.",g:["crédit-bail","leasing","véhicule","dette","location"],u:"Dette de leasing sur véhicules, machines.",e:"Ex : véhicule en leasing 8 000 000 F → Débit <code>245</code> / Crédit <code>173</code>."},
+{n:"181",t:"Dettes de location-acquisition, location-vente",c:1,d:"Dette née d'une location-vente : le bien sera acquis définitivement au terme du paiement des loyers.",g:["location-vente","dette","leasing","acquisition"],u:"Dettes de location avec promesse de vente.",e:"Ex : machine en location-vente → Crédit <code>181</code>."},
+{n:"191",t:"Provisions pour risques divers (financières)",c:1,d:"Montant mis de côté pour un risque financier probable (procès, garantie donnée), dont le montant ou l'échéance reste incertain.",g:["provision","risque","litige","financier"],u:"Anticipe un risque financier probable (litige, garantie).",e:"Ex : litige probable 2 000 000 F → Débit <code>691</code> / Crédit <code>191</code>."},
+{n:"198",t:"Provisions pour charges HAO / différées",c:1,d:"Provision destinée à couvrir des charges futures importantes et probables, comme de grosses réparations.",g:["provision","charge","réparation","différée","HAO"],u:"Charges futures importantes déjà probables (grosses réparations).",e:"Ex : grosse réparation prévue 1 500 000 F → Crédit <code>198</code>."},
+{n:"201",t:"Frais de recherche et de prospection",c:2,d:"Dépenses de recherche et de prospection immobilisées lorsque le projet présente de sérieuses chances de réussite commerciale.",g:["recherche","prospection","R&D","innovation","étude"],u:"Dépenses de recherche immobilisées quand le projet est viable.",e:"Ex : étude nouveau produit 800 000 F → Débit <code>201</code>."},
+{n:"205",t:"Brevets, licences, logiciels, droits similaires",c:2,d:"Actifs immatériels acquis : logiciels, brevets, licences et droits d'exploitation similaires.",g:["logiciel","brevet","licence","incorporel","informatique"],u:"Achats de logiciels, licences, brevets.",e:"Ex : achat logiciel OwoDesk 350 000 F → Débit <code>205</code> / Crédit <code>481</code> ou <code>521</code>."},
+{n:"206",t:"Fonds commercial",c:2,d:"Valeur marchande d'un fonds de commerce acquis : clientèle, enseigne, nom commercial et droit au bail.",g:["fonds de commerce","clientèle","enseigne","rachat"],u:"Valeur du fonds acheté (clientèle, enseigne, droit au bail).",e:"Ex : rachat boutique 6 000 000 F dont fonds 2 000 000 → Débit <code>206</code>."},
+{n:"211",t:"Frais de développement immobilisables",c:2,d:"Frais de mise au point d'un produit ou d'un procédé nouveau, immobilisés avant sa commercialisation.",g:["développement","innovation","immobilisation","R&D"],u:"Frais de mise au point d'un produit avant commercialisation.",e:"Ex : développement appli 2 000 000 F → Débit <code>211</code>."},
+{n:"221",t:"Terrains agricoles",c:2,d:"Terrains agricoles appartenant à l'entreprise, destinés à la culture ou à l'élevage.",g:["terrain","agricole","champ","foncier"],u:"Terrains destinés à l'agriculture.",e:"Ex : achat champ 5 000 000 F → Débit <code>221</code>."},
+{n:"222",t:"Terrains autres (nus, bâtis)",c:2,d:"Terrains nus ou bâtis possédés par l'entreprise, hors terrains agricoles.",g:["terrain","foncier","parcelle","bâtiment"],u:"Tous les autres terrains de l'entreprise.",e:"Ex : achat terrain à Cotonou 15 000 000 F → Débit <code>222</code>."},
+{n:"231",t:"Bâtiments industriels",c:2,d:"Constructions à usage industriel : usines, ateliers et entrepôts appartenant à l'entreprise.",g:["bâtiment","industriel","usine","atelier","construction"],u:"Usines, ateliers appartenant à l'entreprise.",e:"Ex : construction atelier 25 000 000 F → Débit <code>231</code>."},
+{n:"232",t:"Bâtiments administratifs et commerciaux",c:2,d:"Bureaux, magasins et locaux commerciaux possédés par l'entreprise.",g:["bâtiment","bureau","boutique","magasin","locaux"],u:"Bureaux, magasins, boutiques.",e:"Ex : achat bureau 20 000 000 F → Débit <code>232</code>."},
+{n:"234",t:"Aménagements, installations de bâtiments",c:2,d:"Travaux d'aménagement et d'installation réalisés dans les bâtiments : cloisonnement, climatisation, câblage.",g:["aménagement","installation","travaux","bâtiment"],u:"Travaux d'aménagement intérieur, climatisation, câblage.",e:"Ex : aménagement boutique 1 200 000 F → Débit <code>234</code>."},
+{n:"241",t:"Matériel et outillage industriel et commercial",c:2,d:"Machines, outillage et équipements servant à la production ou à l'activité commerciale.",g:["machine","matériel","outillage","production","équipement"],u:"Machines de production, outillage.",e:"Ex : machine industrielle 900 000 F → Débit <code>241</code>."},
+{n:"242",t:"Matériel et mobilier d'exploitation des mines et carrières",c:2,d:"Équipements spécifiques à l'exploitation des mines et des carrières.",g:["mine","carrière","matériel","équipement"],u:"Équipements spécifiques mines/carrières.",e:"Ex : concasseur 12 000 000 F → Débit <code>242</code>."},
+{n:"244",t:"Matériel et mobilier des activités socio-éducatives",c:2,d:"Mobilier et matériel destinés aux activités d'enseignement et d'éducation.",g:["école","éducation","mobilier","formation"],u:"Équipements d'écoles, centres de formation.",e:"Ex : tables d'école 600 000 F → Débit <code>244</code>."},
+{n:"245",t:"Matériel de transport",c:2,d:"Véhicules appartenant à l'entreprise : livraison, transport du personnel, service commercial.",g:["véhicule","transport","voiture","moto","livraison"],u:"Véhicules de l'entreprise (livraison, service).",e:"Ex : moto de livraison 750 000 F → Débit <code>245</code> / Crédit <code>521</code>."},
+{n:"246",t:"Actifs biologiques (animaux, végétaux)",c:2,d:"Actifs vivants de l'entreprise : cheptel, plantations durables et autres ressources biologiques.",g:["biologique","cheptel","plantation","agriculture","élevage"],u:"Cheptel, plantations durables.",e:"Ex : plantation de palmiers 4 000 000 F → Débit <code>246</code>."},
+{n:"251",t:"Avances et acomptes versés sur immobilisations incorporelles",c:2,d:"Acomptes versés aux fournisseurs avant réception d'une immobilisation incorporelle (logiciel, brevet).",g:["avance","acompte","incorporel","fournisseur","logiciel"],u:"Acomptes versés avant réception d'un logiciel, brevet.",e:"Ex : acompte 30% logiciel → Débit <code>251</code> / Crédit <code>521</code>."},
+{n:"252",t:"Avances et acomptes versés sur immobilisations corporelles",c:2,d:"Acomptes versés avant réception d'une immobilisation corporelle (terrain, machine, bâtiment en cours).",g:["avance","acompte","corporel","fournisseur","terrain"],u:"Acomptes versés pour terrains, bâtiments, machines en cours.",e:"Ex : acompte terrain 2 000 000 F → Débit <code>252</code>."},
+{n:"261",t:"Titres de participation dans la zone UEMOA / OHADA",c:2,d:"Parts détenues durablement dans le capital d'autres sociétés, pour les contrôler ou en tirer des revenus.",g:["participation","titres","actions","filiale","investissement"],u:"Parts détenues durablement dans d'autres sociétés.",e:"Ex : prise de participation 5 000 000 F → Débit <code>261</code>."},
+{n:"271",t:"Prêts immobilisés (au personnel, associés)",c:2,d:"Prêts accordés à plus d'un an au personnel, aux associés ou aux filiales.",g:["prêt","personnel","salarié","immobilisé","avance"],u:"Prêts accordés à plus d'un an (salariés, filiales).",e:"Ex : prêt au salarié remboursable 2 ans 500 000 F → Débit <code>271</code>."},
+{n:"275",t:"Dépôts et cautionnements versés",c:2,d:"Sommes versées en garantie et récupérables : caution de loyer, compteurs, marchés publics.",g:["caution","dépôt","garantie","loyer","compteur"],u:"Cautions loyer, compteurs, garanties.",e:"Ex : caution boutique 300 000 F → Débit <code>275</code> / Crédit <code>521</code>."},
+{n:"281",t:"Amortissements des immobilisations incorporelles",c:2,d:"Cumul des amortissements constatés sur les immobilisations incorporelles (logiciels, brevets). C'est un compte d'actif soustractif.",g:["amortissement","incorporel","logiciel","usure","dotation"],u:"Constate l'usure des logiciels, brevets (amortissement).",e:"Ex : logiciel 350 000 / 3 ans = 116 667 → Débit <code>681</code> / Crédit <code>281</code>."},
+{n:"282",t:"Amortissements des terrains (aménagements)",c:2,d:"Amortissement des aménagements effectués sur les terrains. Le terrain nu lui-même ne s'amortit jamais.",g:["amortissement","terrain","aménagement"],u:"Amortit les aménagements de terrains (pas le terrain nu).",e:"Ex : amortissement clôture terrain → Débit <code>681</code> / Crédit <code>282</code>."},
+{n:"283",t:"Amortissements des bâtiments",c:2,d:"Cumul de la dépréciation annuelle des bâtiments, étalée sur leur durée de vie (20 à 25 ans en général).",g:["amortissement","bâtiment","construction","usure"],u:"Usure des bâtiments (20 à 25 ans en général).",e:"Ex : bâtiment 20 000 000 / 20 ans = 1 000 000 /an → Débit <code>681</code> / Crédit <code>283</code>."},
+{n:"284",t:"Amortissements du matériel et mobilier",c:2,d:"Cumul des amortissements du matériel, du mobilier et des véhicules.",g:["amortissement","matériel","véhicule","mobilier","machine"],u:"Usure des machines, véhicules, mobilier.",e:"Ex : véhicule 6 000 000 / 5 ans → Débit <code>681</code> / Crédit <code>284</code>."},
+{n:"291",t:"Provisions pour dépréciation des immobilisations",c:2,d:"Constatation d'une perte de valeur durable d'une immobilisation, indépendante de son usure normale.",g:["provision","dépréciation","immobilisation","perte de valeur"],u:"Baisse de valeur durable d'une immobilisation (non liée à l'usage).",e:"Ex : terrain dévalué 1 000 000 F → Débit <code>691</code> / Crédit <code>291</code>."},
+{n:"311",t:"Marchandises en stock",c:3,d:"Valeur des marchandises achetées pour être revendues en l'état et encore en stock à la clôture.",g:["stock","marchandise","inventaire","commerce"],u:"Biens achetés pour être revendus en l'état (commerce).",e:"Ex : stock boutique inventorié 8 000 000 F → Débit <code>311</code>."},
+{n:"312",t:"Marchandises en consignation ou en dépôt",c:3,d:"Marchandises confiées à un dépositaire pour la vente, ou reçues en dépôt.",g:["consignation","dépôt","stock","dépositaire"],u:"Marchandises confiées à un tiers ou reçues en dépôt.",e:"Ex : 100 sacs chez un dépositaire → Débit <code>312</code>."},
+{n:"321",t:"Matières premières",c:3,d:"Matières premières non encore utilisées, destinées à entrer dans la fabrication.",g:["matière première","stock","fabrication","production"],u:"Matières qui entrent dans la fabrication (farine, tissu, ciment).",e:"Ex : stock farine boulangerie 1 500 000 F → Débit <code>321</code>."},
+{n:"322",t:"Matières consommables",c:3,d:"Fournitures consommables stockées : emballages, petits matériels d'atelier.",g:["consommable","emballage","stock","fourniture"],u:"Petites fournitures consommées (emballages, carburant atelier).",e:"Ex : stock emballages 200 000 F → Débit <code>322</code>."},
+{n:"331",t:"Matières en cours de route / en transit",c:3,d:"Achats déjà payés ou facturés mais encore en transit et non réceptionnés, typiquement des importations.",g:["transit","import","transport","en cours de route"],u:"Achats déjà payés mais pas encore reçus (import).",e:"Ex : conteneur en route depuis Dubaï → Débit <code>331</code>."},
+{n:"341",t:"Produits en cours (fabrication)",c:3,d:"Valeur des fabrications commencées mais inachevées à la date de clôture.",g:["en cours","fabrication","production","inachevé"],u:"Produits pas encore finis à la clôture.",e:"Ex : meubles à moitié montés 700 000 F → Débit <code>341</code>."},
+{n:"351",t:"Services en cours",c:3,d:"Prestations de services commencées mais non terminées : chantiers, études, missions de conseil.",g:["en cours","service","chantier","prestation"],u:"Prestations commencées non terminées (BTP, consulting).",e:"Ex : chantier à 60% → Débit <code>351</code>."},
+{n:"361",t:"Produits finis",c:3,d:"Produits fabriqués par l'entreprise, achevés et prêts à être vendus.",g:["produit fini","stock","fabrication","vente"],u:"Produits fabriqués prêts à vendre.",e:"Ex : 500 pagnes finis 2 500 000 F → Débit <code>361</code>."},
+{n:"371",t:"Produits intermédiaires",c:3,d:"Produits ayant subi une première transformation et destinés à être réutilisés dans la production.",g:["produit intermédiaire","stock","fabrication","semi-fini"],u:"Produits ayant subi une transformation, réutilisables.",e:"Ex : jus concentré avant dilution → Débit <code>371</code>."},
+{n:"381",t:"Stocks en cours de route (produits)",c:3,d:"Produits finis expédiés mais pas encore livrés au client à la clôture.",g:["transit","expédition","livraison","stock"],u:"Produits finis expédiés mais non encore livrés.",e:"Ex : livraison en transit → Débit <code>381</code>."},
+{n:"391",t:"Dépréciations des stocks de marchandises",c:3,d:"Perte de valeur constatée sur les stocks de marchandises : invendus, périmés ou abîmés.",g:["dépréciation","stock","provision","périmé","invendu"],u:"Perte de valeur des stocks (périmés, abîmés, invendus).",e:"Ex : riz avarié 300 000 F → Débit <code>659</code> / Crédit <code>391</code>."},
+{n:"392",t:"Dépréciations des autres approvisionnements",c:3,d:"Perte de valeur des matières et fournitures stockées : mode passée, détérioration.",g:["dépréciation","matière","stock","provision"],u:"Dépréciation matières premières et consommables.",e:"Ex : tissu démodé → Crédit <code>392</code>."},
+{n:"401",t:"Fournisseurs, dettes en compte",c:4,d:"Dettes de l'entreprise envers ses fournisseurs pour des achats de biens ou services à crédit.",g:["fournisseur","dette","achat","crédit","facture"],u:"Ce que vous devez à vos fournisseurs (achats à crédit).",e:"Ex : achat à crédit 1 000 000 F → Débit <code>601</code> + <code>445</code> TVA / Crédit <code>401</code>. Paiement : Débit <code>401</code> / Crédit <code>521</code>."},
+{n:"402",t:"Fournisseurs d'immobilisations",c:4,d:"Dettes envers les vendeurs d'immobilisations : machines, véhicules ou bâtiments achetés à crédit.",g:["fournisseur","immobilisation","dette","machine"],u:"Dettes envers vendeurs de machines, véhicules, bâtiments.",e:"Ex : machine à crédit 2 000 000 F → Débit <code>241</code> / Crédit <code>402</code>."},
+{n:"408",t:"Fournisseurs, factures non parvenues",c:4,d:"Achats réceptionnés dont la facture n'est pas encore parvenue à la clôture : la dette est certaine mais non documentée.",g:["facture non parvenue","fournisseur","clôture","dette"],u:"Achats reçus mais facture pas encore reçue à la clôture.",e:"Ex : livraison reçue sans facture 500 000 F → Crédit <code>408</code>."},
+{n:"409",t:"Fournisseurs débiteurs (avances et acomptes versés)",c:4,d:"Avances et acomptes versés aux fournisseurs avant réception des biens ou services commandés.",g:["avance","acompte","fournisseur","commande"],u:"Avances payées aux fournisseurs avant réception.",e:"Ex : avance 200 000 F au fournisseur → Débit <code>409</code> / Crédit <code>521</code>."},
+{n:"411",t:"Clients, créances en compte",c:4,d:"Créances détenues sur les clients après des ventes à crédit. C'est un actif circulant : l'argent est attendu mais pas encore encaissé.",g:["client","créance","vente","crédit","facture","impayé"],u:"Ce que vos clients vous doivent (ventes à crédit).",e:"Ex : vente à crédit 600 000 F TTC → Débit <code>411</code> / Crédit <code>701</code> + <code>443</code> TVA. Encaissement : Débit <code>521</code> / Crédit <code>411</code>."},
+{n:"412",t:"Clients, effets à recevoir",c:4,d:"Traites et billets à ordre acceptés par les clients en règlement de leurs dettes.",g:["traite","effet","billet à ordre","client","échéance"],u:"Traites et billets à ordre acceptés par les clients.",e:"Ex : traite acceptée 1 000 000 F → Débit <code>412</code> / Crédit <code>411</code>."},
+{n:"418",t:"Clients, factures à établir (produits à recevoir)",c:4,d:"Ventes réalisées mais non encore facturées à la clôture : le produit est acquis, la facture reste à émettre.",g:["facture à établir","client","clôture","produit à recevoir"],u:"Ventes réalisées mais facture pas encore émise.",e:"Ex : prestation décembre facturée en janvier → Débit <code>418</code>."},
+{n:"419",t:"Clients créditeurs (avances et acomptes reçus)",c:4,d:"Avances et acomptes reçus des clients avant livraison : une dette envers le client jusqu'à la vente définitive.",g:["avance","acompte","client","commande"],u:"Avances reçues des clients avant livraison.",e:"Ex : acompte client 150 000 F → Débit <code>521</code> / Crédit <code>419</code>."},
+{n:"421",t:"Personnel, avances et acomptes",c:4,d:"Avances sur salaire versées aux salariés avant la paie, à déduire du salaire net.",g:["avance","salaire","personnel","salarié","quinzaine"],u:"Avances sur salaire versées aux employés.",e:"Ex : avance quinzaine 50 000 F → Débit <code>421</code> / Crédit <code>571</code>."},
+{n:"422",t:"Personnel, rémunérations dues",c:4,d:"Salaires nets dus aux salariés à la fin du mois, avant leur paiement.",g:["salaire","paie","personnel","net","rémunération"],u:"Salaires nets à payer à la fin du mois.",e:"Ex : salaires nets 1 200 000 F → Débit <code>661</code> / Crédit <code>422</code>. Paiement : Débit <code>422</code> / Crédit <code>521</code>."},
+{n:"423",t:"Personnel, oppositions et saisies-arrêts",c:4,d:"Retenues effectuées sur les salaires pour le compte de créanciers du salarié : saisies et oppositions judiciaires.",g:["saisie","opposition","salaire","retenue","justice"],u:"Retenues sur salaire pour dettes du salarié (justice).",e:"Ex : saisie 30 000 F → Débit <code>422</code> / Crédit <code>423</code>."},
+{n:"431",t:"Sécurité sociale (CNSS, IPS-CGRAE…)",c:4,d:"Cotisations sociales salariales et patronales dues aux organismes comme la CNSS.",g:["CNSS","cotisation","sociale","sécurité sociale","patronale"],u:"Cotisations sociales patronales et salariales à reverser.",e:"Ex : CNSS 180 000 F → Débit <code>664</code> / Crédit <code>431</code>."},
+{n:"432",t:"Autres organismes sociaux",c:4,d:"Cotisations dues aux autres organismes sociaux : mutuelle, retraite complémentaire.",g:["mutuelle","retraite","cotisation","social"],u:"Mutuelle, caisse de retraite complémentaire.",e:"Ex : mutuelle 40 000 F → Crédit <code>432</code>."},
+{n:"441",t:"État, impôt sur les sociétés",c:4,d:"Impôt sur les sociétés ou BIC dû à l'État au titre de l'exercice.",g:["impôt","IS","BIC","société","état","fiscal"],u:"IS / BIC à payer à l'État.",e:"Ex : IS dû 900 000 F → Débit <code>891</code> / Crédit <code>441</code>."},
+{n:"442",t:"État, autres impôts et taxes (ITS, AIB…)",c:4,d:"Autres impôts directs à la charge de l'entreprise : ITS sur salaires, patente, retenues.",g:["ITS","patente","impôt","taxe","fiscal"],u:"Impôts sur salaires (ITS), retenues, patentes.",e:"Ex : ITS 120 000 F → Débit <code>641</code> / Crédit <code>442</code>."},
+{n:"443",t:"État, TVA facturée (collectée sur ventes)",c:4,d:"TVA collectée sur les ventes : facturée aux clients, elle devra être reversée à l'État.",g:["TVA","collectée","vente","taxe","état"],u:"TVA que vous collectez sur vos ventes et reversez à l'État.",e:"Ex : vente 1 000 000 + TVA 18% = 180 000 → Crédit <code>443</code> 180 000."},
+{n:"444",t:"État, TVA due / crédit de TVA",c:4,d:"Solde de la TVA à payer à l'État après déduction, ou crédit de TVA à reporter.",g:["TVA","due","crédit","déclaration","état"],u:"Solde de TVA à payer (ou crédit à reporter).",e:"Ex : TVA due 95 000 F → Débit <code>443</code> / Crédit <code>444</code>."},
+{n:"445",t:"État, TVA récupérable (sur achats)",c:4,d:"TVA payée sur les achats : elle est récupérable par déduction de la TVA collectée.",g:["TVA","récupérable","achat","déduction","taxe"],u:"TVA payée sur vos achats, déductible.",e:"Ex : achat 500 000 + TVA 90 000 → Débit <code>445</code> 90 000."},
+{n:"446",t:"État, autres taxes sur le chiffre d'affaires",c:4,d:"Autres taxes sur le chiffre d'affaires : AIB et retenues opérées sur les ventes.",g:["AIB","taxe","chiffre d'affaires","retenue"],u:"Autres taxes (AIB, retenues à la source).",e:"Ex : AIB 1% retenu 10 000 F → Crédit <code>446</code>."},
+{n:"447",t:"État, impôts retenus à la source",c:4,d:"Retenues d'impôts opérées pour le compte de l'État sur les paiements aux prestataires.",g:["retenue","source","prestataire","impôt","état"],u:"Retenues prélevées pour le compte de l'État (prestataires).",e:"Ex : retenue 5% sur facture prestataire → Crédit <code>447</code>."},
+{n:"449",t:"État, créances et dettes diverses",c:4,d:"Autres créances et dettes envers l'État : remboursements attendus, crédits de TVA, droits divers.",g:["état","créance","dette","TVA","remboursement"],u:"Autres relations avec l'État (remboursements attendus).",e:"Ex : crédit TVA à reporter → Débit <code>449</code>."},
+{n:"461",t:"Associés et groupe, comptes courants",c:4,d:"Avances et prêts entre la société et ses associés : apports en compte courant.",g:["associé","compte courant","avance","groupe"],u:"Avances entre associés et société.",e:"Ex : associé avance 1 000 000 F → Crédit <code>461</code>."},
+{n:"471",t:"Débiteurs divers",c:4,d:"Sommes dues par des tiers autres que les clients et les salariés : prêts, avances diverses.",g:["débiteur","créance","divers","tiers"],u:"Personnes qui vous doivent de l'argent (hors clients).",e:"Ex : prêt consenti par l'entreprise → Débit <code>471</code>."},
+{n:"472",t:"Créditeurs divers",c:4,d:"Sommes dues à des tiers autres que les fournisseurs : honoraires, dettes diverses.",g:["créditeur","dette","divers","honoraire","tiers"],u:"Personnes à qui vous devez (hors fournisseurs).",e:"Ex : honoraire comptable à payer → Crédit <code>472</code>."},
+{n:"481",t:"Fournisseurs d'investissements (cessions)",c:4,d:"Dettes liées à l'acquisition d'immobilisations : prix restant dû au cédant.",g:["cession","immobilisation","dette","acquisition"],u:"Dettes liées aux cessions d'immobilisations.",e:"Ex : reste à payer sur machine revendue → Crédit <code>481</code>."},
+{n:"485",t:"Créances sur cessions d'immobilisations",c:4,d:"Créances nées de la vente d'immobilisations à crédit : prix à recevoir du repreneur.",g:["cession","créance","vente","immobilisation"],u:"Clients qui vous doivent pour une machine vendue.",e:"Ex : vente véhicule à crédit 3 000 000 F → Débit <code>485</code>."},
+{n:"491",t:"Dépréciations des comptes de clients",c:4,d:"Dépréciation des créances clients douteuses : montant qui risque de ne jamais être encaissé.",g:["douteux","impayé","provision","client","dépréciation"],u:"Clients douteux qui risquent de ne pas payer.",e:"Ex : client douteux 400 000 F → Débit <code>659</code> / Crédit <code>491</code>."},
+{n:"521",t:"Banques locales (comptes courants)",c:5,d:"Disponibilités en banque : comptes courants dans les banques locales (Ecobank, NSIA, UBA, Orabank…).",g:["banque","compte","virement","chèque","trésorerie"],u:"Argent disponible en banque (Ecobank, NSIA, UBA, Orabank…).",e:"Ex : encaissement client 600 000 F → Débit <code>521</code> / Crédit <code>411</code>. Paiement fournisseur : Débit <code>401</code> / Crédit <code>521</code>."},
+{n:"522",t:"Banques, autres États de la région",c:5,d:"Comptes bancaires détenus dans un autre État de la région OHADA.",g:["banque","étranger","région","UEMOA","CEMAC"],u:"Comptes bancaires dans un autre pays OHADA.",e:"Ex : compte au Sénégal → Débit <code>522</code>."},
+{n:"526",t:"Banques, crédits d'escompte et de trésorerie",c:5,d:"Découverts et avances de trésorerie accordés par la banque : une dette à court terme, pas une disponibilité.",g:["découvert","banque","trésorerie","crédit","dette"],u:"Découverts et avances bancaires à court terme.",e:"Ex : découvert 500 000 F → Crédit <code>526</code>."},
+{n:"531",t:"Chèques postaux",c:5,d:"Disponibilités détenues sur les comptes de chèques postaux.",g:["poste","chèque postal","trésorerie"],u:"Comptes postaux (services financiers postaux).",e:"Ex : versement postal → Débit <code>531</code>."},
+{n:"532",t:"Trésor",c:5,d:"Fonds détenus auprès du Trésor public.",g:["trésor","public","état","fonds"],u:"Comptes au Trésor public.",e:"Ex : règlement via Trésor → Débit <code>532</code>."},
+{n:"541",t:"Régies d'avances et accréditifs",c:5,d:"Fonds confiés à un régisseur pour payer les petites dépenses courantes : chantiers, missions, antennes.",g:["régie","avance","caisse","régisseur","menues dépenses"],u:"Fonds confiés à un régisseur pour petites dépenses.",e:"Ex : fonds de caisse chantier 200 000 F → Débit <code>541</code>."},
+{n:"561",t:"Crédits d'escompte (effets escomptés)",c:5,d:"Effets remis à la banque pour être encaissés avant leur échéance, moyennant des agios.",g:["escompte","effet","traite","banque","trésorerie"],u:"Effets remis à la banque pour encaissement anticipé.",e:"Ex : escompte traite 1 000 000 F → Crédit <code>561</code>."},
+{n:"571",t:"Caisse (espèces)",c:5,d:"Espèces détenues dans le coffre de l'entreprise : billets et pièces.",g:["caisse","espèces","liquide","cash"],u:"Argent liquide en caisse.",e:"Ex : vente au comptant espèces 75 000 F → Débit <code>571</code> / Crédit <code>701</code> + <code>443</code>. Paiement espèce : Débit <code>401</code> / Crédit <code>571</code>."},
+{n:"581",t:"Virements internes (banque → caisse)",c:5,d:"Compte de passage qui enregistre les transferts de fonds entre la banque et la caisse, ou entre banques.",g:["virement interne","banque","caisse","transfert"],u:"Compte de passage pour transferts entre banque et caisse.",e:"Ex : retrait banque pour caisse 300 000 F → Débit <code>581</code> / Crédit <code>521</code>, puis Débit <code>571</code> / Crédit <code>581</code>."},
+{n:"591",t:"Dépréciations des titres de placement",c:5,d:"Baisse de valeur des titres de placement à court terme détenus par l'entreprise.",g:["dépréciation","placement","titres","provision"],u:"Baisse de valeur des placements à court terme.",e:"Ex : actions placées dévaluées → Crédit <code>591</code>."},
+{n:"601",t:"Achats de marchandises",c:6,d:"Coût des biens achetés pour être revendus en l'état, au cœur de l'activité commerciale.",g:["achat","marchandise","stock","commerce","fournisseur"],u:"Achats de biens destinés à la revente (commerce).",e:"Ex : achat stock 1 000 000 F HT → Débit <code>601</code> 1 000 000 + <code>445</code> 180 000 / Crédit <code>401</code> 1 180 000."},
+{n:"602",t:"Achats de matières premières et fournitures",c:6,d:"Coût des matières premières et fournitures destinées à la fabrication.",g:["achat","matière première","fabrication","production"],u:"Achats pour fabriquer (industrie, artisanat, restauration).",e:"Ex : achat farine 300 000 F → Débit <code>602</code> / Crédit <code>401</code>."},
+{n:"604",t:"Achats stockés de matières consommables",c:6,d:"Achats de matières consommables stockées avant utilisation : emballages, petits matériels.",g:["achat","consommable","emballage","stock"],u:"Emballages, petits matériels stockés.",e:"Ex : cartons 80 000 F → Débit <code>604</code>."},
+{n:"605",t:"Autres achats (fournitures non stockées, eau, électricité)",c:6,d:"Achats consommés immédiatement, sans stockage : eau, électricité, fournitures de bureau.",g:["électricité","eau","fourniture","facture","bureau"],u:"Factures d'électricité, eau, fournitures bureau consommées aussitôt.",e:"Ex : facture électricité 45 000 F → Débit <code>605</code> / Crédit <code>521</code>."},
+{n:"611",t:"Transports sur achats",c:6,d:"Frais de transport des marchandises achetées, du fournisseur jusqu'à l'entreprise.",g:["transport","achat","livraison","fret"],u:"Frais de transport des marchandises achetées.",e:"Ex : livraison fournisseur 25 000 F → Débit <code>611</code>."},
+{n:"612",t:"Transports sur ventes",c:6,d:"Frais de livraison des produits vendus jusqu'au client.",g:["transport","vente","livraison","expédition","client"],u:"Livraison vers vos clients.",e:"Ex : envoi colis client 15 000 F → Débit <code>612</code>."},
+{n:"621",t:"Transports de personnel / déplacements",c:6,d:"Frais de déplacement et de transport du personnel : missions, bus, carburant de service.",g:["déplacement","mission","personnel","transport","voyage"],u:"Bus du personnel, missions.",e:"Ex : mission Cotonou-Parakou 60 000 F → Débit <code>621</code>."},
+{n:"622",t:"Locations et charges locatives",c:6,d:"Loyers des locaux occupés : boutique, bureau, entrepôt, et charges locatives associées.",g:["loyer","location","bail","bureau","boutique"],u:"Loyers boutique, bureau, entrepôt.",e:"Ex : loyer mensuel 250 000 F → Débit <code>622</code> / Crédit <code>521</code>."},
+{n:"623",t:"Redevances de crédit-bail (leasing)",c:6,d:"Loyers versés au crédit-bailleur pour les biens financés en leasing.",g:["crédit-bail","leasing","loyer","redevance"],u:"Loyers de crédit-bail (véhicule, machine).",e:"Ex : mensualité leasing 180 000 F → Débit <code>623</code>."},
+{n:"624",t:"Entretien, réparations et maintenance",c:6,d:"Dépenses d'entretien courant et de réparation des locaux, véhicules et machines.",g:["entretien","réparation","maintenance","garage"],u:"Réparations véhicules, machines, locaux.",e:"Ex : réparation moto 35 000 F → Débit <code>624</code>."},
+{n:"625",t:"Primes d'assurance",c:6,d:"Primes versées pour assurer les biens et l'activité : locaux, véhicules, stocks, responsabilité civile.",g:["assurance","prime","véhicule","garantie"],u:"Assurances locaux, véhicules, stock.",e:"Ex : assurance annuelle 240 000 F → Débit <code>625</code>."},
+{n:"626",t:"Études, recherches et documentation",c:6,d:"Coût des études, recherches et documentations achetées à l'extérieur.",g:["étude","recherche","documentation","conseil"],u:"Études de marché, documentation technique.",e:"Ex : étude de marché 150 000 F → Débit <code>626</code>."},
+{n:"627",t:"Publicité, relations publiques",c:6,d:"Dépenses pour faire connaître l'entreprise : publicité, flyers, réseaux sociaux, sponsoring.",g:["publicité","marketing","communication","pub","sponsoring"],u:"Pub Facebook, flyers, sponsoring.",e:"Ex : boost Facebook 50 000 F → Débit <code>627</code> / Crédit <code>571</code>."},
+{n:"628",t:"Frais de télécommunication (téléphone, internet)",c:6,d:"Abonnements et consommations téléphoniques et internet.",g:["téléphone","internet","communication","forfait","mobile"],u:"Forfaits téléphoniques, fibre, crédit d'appel.",e:"Ex : forfait internet 20 000 F → Débit <code>628</code>."},
+{n:"631",t:"Frais bancaires",c:6,d:"Commissions et frais prélevés par la banque : agios, virements, tenue de compte.",g:["banque","agios","frais","commission"],u:"Agios, commissions, frais de virement.",e:"Ex : agios 12 000 F → Débit <code>631</code> / Crédit <code>521</code>."},
+{n:"632",t:"Rémunérations d'intermédiaires et conseils (honoraires)",c:6,d:"Honoraires versés aux professions libérales et intermédiaires : comptable, avocat, consultant.",g:["honoraire","comptable","avocat","consultant","conseil"],u:"Honoraires comptable, avocat, consultant.",e:"Ex : honoraire comptable 100 000 F → Débit <code>632</code> / Crédit <code>472</code>."},
+{n:"634",t:"Redevances pour brevets, licences, logiciels",c:6,d:"Redevances d'utilisation de brevets, licences et abonnements logiciels.",g:["licence","logiciel","abonnement","redevance","brevet"],u:"Abonnements logiciels (OwoDesk, antivirus).",e:"Ex : abonnement OwoDesk 15 000 F/mois → Débit <code>634</code>."},
+{n:"641",t:"Impôts et taxes directs (ITS, patente, foncier)",c:6,d:"Impôts et taxes supportés par l'entreprise : ITS, patente, taxe foncière.",g:["impôt","taxe","ITS","patente","fiscal"],u:"Impôts à la charge de l'entreprise.",e:"Ex : ITS sur salaires 120 000 F → Débit <code>641</code> / Crédit <code>442</code>."},
+{n:"646",t:"Droits d'enregistrement, timbres, vignettes",c:6,d:"Droits payés pour l'enregistrement des actes, timbres fiscaux et vignettes.",g:["timbre","enregistrement","droit","vignette"],u:"Timbres fiscaux, enregistrement contrats.",e:"Ex : timbres 10 000 F → Crédit <code>646</code>."},
+{n:"651",t:"Pertes sur créances clients (irrécouvrables)",c:6,d:"Créances clients définitivement perdues : le client ne paiera jamais (disparition, insolvabilité).",g:["irrécouvrable","impayé","perte","client","créance"],u:"Client qui ne paiera définitivement jamais.",e:"Ex : client disparu 200 000 F → Débit <code>651</code> / Crédit <code>411</code>."},
+{n:"658",t:"Charges diverses (dons, libéralités)",c:6,d:"Charges diverses de gestion courante : dons, libéralités, petits écarts.",g:["don","divers","libéralité","cadeau"],u:"Dons, cadeaux, charges non classées.",e:"Ex : don association 25 000 F → Débit <code>658</code>."},
+{n:"659",t:"Charges pour dépréciations (clients, stocks)",c:6,d:"Dotations constatant la dépréciation probable des créances clients et des stocks.",g:["provision","dépréciation","douteux","stock","client"],u:"Constate les risques de non-paiement et pertes de stocks.",e:"Ex : provision client douteux → Débit <code>659</code> / Crédit <code>491</code>."},
+{n:"661",t:"Salaires et appointements (bruts)",c:6,d:"Salaires bruts versés au personnel, avant retenues sociales et fiscales.",g:["salaire","brut","paie","personnel","rémunération"],u:"Salaires bruts du personnel.",e:"Ex : salaires bruts 1 500 000 F → Débit <code>661</code> / Crédit <code>422</code> + <code>431</code> + <code>442</code>."},
+{n:"664",t:"Charges sociales patronales sur salaires",c:6,d:"Cotisations sociales à la charge de l'employeur : part patronale CNSS et organismes sociaux.",g:["CNSS","patronale","cotisation","sociale","charge"],u:"Part patronale CNSS et organismes sociaux.",e:"Ex : CNSS patronale 180 000 F → Débit <code>664</code> / Crédit <code>431</code>."},
+{n:"671",t:"Intérêts des emprunts et dettes",c:6,d:"Intérêts payés sur les emprunts et dettes financières.",g:["intérêt","emprunt","banque","crédit","dette"],u:"Intérêts des prêts bancaires.",e:"Ex : intérêt mensuel 65 000 F → Débit <code>671</code> / Crédit <code>521</code>."},
+{n:"676",t:"Pertes de change",c:6,d:"Perte née de l'évolution défavorable d'une devise lors d'un règlement en monnaie étrangère.",g:["change","devise","dollar","perte","euro"],u:"Perte due à la variation dollar/euro/naïra.",e:"Ex : facture dollar payée plus cher +20 000 F → Débit <code>676</code>."},
+{n:"681",t:"Dotations aux amortissements d'exploitation",c:6,d:"Charge annuelle qui répartit le coût des immobilisations sur leur durée d'utilisation.",g:["amortissement","dotation","immobilisation","usure"],u:"Étalement du coût des immobilisations chaque année.",e:"Ex : amortissement annuel machine 400 000 F → Débit <code>681</code> / Crédit <code>284</code>."},
+{n:"691",t:"Dotations aux provisions d'exploitation",c:6,d:"Provisions constituées pour les risques d'exploitation : litiges, garanties, dépréciations.",g:["provision","risque","litige","dotation","exploitation"],u:"Anticipe un risque d'exploitation (litige, dépréciation).",e:"Ex : provision litige 500 000 F → Débit <code>691</code> / Crédit <code>191</code>."},
+{n:"701",t:"Ventes de marchandises",c:7,d:"Chiffre d'affaires des marchandises revendues en l'état : le cœur de l'activité commerciale.",g:["vente","marchandise","chiffre d'affaires","commerce","recette"],u:"Ventes de biens revendus en l'état (activité commerciale).",e:"Ex : vente boutique 600 000 F TTC → Débit <code>411/521</code> / Crédit <code>701</code> HT + <code>443</code> TVA."},
+{n:"702",t:"Ventes de produits finis",c:7,d:"Ventes des biens fabriqués par l'entreprise elle-même.",g:["vente","produit fini","fabrication","chiffre d'affaires"],u:"Ventes de biens fabriqués par l'entreprise.",e:"Ex : vente meubles fabriqués 900 000 F → Crédit <code>702</code>."},
+{n:"706",t:"Services vendus (prestations, travaux, études)",c:7,d:"Chiffre d'affaires des prestations de services : coiffure, réparation, conseil, BTP.",g:["service","prestation","vente","chiffre d'affaires","consulting"],u:"Prestations de services : coiffure, réparation, consulting, BTP.",e:"Ex : prestation 10 000 F → Débit <code>571</code> / Crédit <code>706</code>."},
+{n:"707",t:"Ventes d'accessoires, emballages",c:7,d:"Ventes annexes : emballages, déchets et accessoires cédés par l'entreprise.",g:["accessoire","emballage","vente","annexe"],u:"Ventes annexes (emballages, déchets).",e:"Ex : vente cartons usagés 30 000 F → Crédit <code>707</code>."},
+{n:"711",t:"Transports facturés sur ventes",c:7,d:"Frais de transport refacturés au client sur ses achats.",g:["transport","port","facturé","livraison","client"],u:"Frais de port refacturés au client.",e:"Ex : livraison facturée 15 000 F → Crédit <code>711</code>."},
+{n:"721",t:"Production immobilisée : immobilisations incorporelles",c:7,d:"Valeur des immobilisations incorporelles créées par l'entreprise pour elle-même (logiciel ou brevet interne).",g:["production","immobilisée","logiciel","interne","création"],u:"Logiciel ou brevet créé par l'entreprise pour elle-même.",e:"Ex : appli créée en interne 2 000 000 F → Débit <code>211</code> / Crédit <code>721</code>."},
+{n:"722",t:"Production immobilisée : immobilisations corporelles",c:7,d:"Valeur des constructions et équipements réalisés par l'entreprise pour son propre usage.",g:["production","immobilisée","construction","interne","bâtiment"],u:"Bâtiment ou machine construit par l'entreprise pour elle-même.",e:"Ex : hangar auto-construit 5 000 000 F → Débit <code>231</code> / Crédit <code>722</code>."},
+{n:"751",t:"Profits divers (dédommagements reçus)",c:7,d:"Profits exceptionnels de gestion courante : indemnités d'assurance, dégrèvements obtenus.",g:["indemnité","assurance","profit","dédommagement"],u:"Indemnités d'assurance reçues, dégrèvements.",e:"Ex : indemnité assurance 300 000 F → Débit <code>521</code> / Crédit <code>751</code>."},
+{n:"758",t:"Autres produits divers",c:7,d:"Autres produits de gestion courante non classés ailleurs.",g:["produit","divers","autre"],u:"Produits d'exploitation non classés ailleurs.",e:"Ex : remboursement inattendu → Crédit <code>758</code>."},
+{n:"771",t:"Intérêts et produits assimilés (placements)",c:7,d:"Revenus des placements et prêts : intérêts bancaires, dividendes reçus.",g:["intérêt","placement","revenu","financier","dividende"],u:"Intérêts reçus sur placements, prêts accordés.",e:"Ex : intérêts épargne 25 000 F → Débit <code>521</code> / Crédit <code>771</code>."},
+{n:"776",t:"Gains de change",c:7,d:"Gain né d'une évolution favorable du cours d'une devise lors d'un règlement.",g:["change","devise","gain","dollar","euro"],u:"Gain dû à une variation de change favorable.",e:"Ex : dollar baissé, économie 18 000 F → Crédit <code>776</code>."},
+{n:"781",t:"Reprises de provisions d'exploitation",c:7,d:"Annulation d'une provision d'exploitation devenue sans objet : le risque a disparu.",g:["reprise","provision","annulation","exploitation"],u:"Annule une provision devenue inutile.",e:"Ex : client douteux a finalement payé → Débit <code>491</code> / Crédit <code>781</code>."},
+{n:"791",t:"Transferts de charges d'exploitation",c:7,d:"Transferts de charges vers d'autres comptes : avantages en nature, frais refacturés.",g:["transfert","charge","avantage en nature"],u:"Transfère une charge vers un autre compte (avantages en nature).",e:"Ex : avantage logement salarié → Débit <code>661</code> / Crédit <code>791</code>."},
+{n:"811",t:"Valeurs comptables des cessions HAO (charges)",c:8,d:"Valeur nette comptable du bien cédé ou détruit hors activité normale : c'est la sortie de l'actif.",g:["cession","HAO","valeur comptable","vente","immobilisation"],u:"Valeur du bien vendu ou détruit (hors activité normale).",e:"Ex : machine (valeur nette 800 000) vendue → Débit <code>811</code> 800 000."},
+{n:"821",t:"Produits des cessions HAO (prix de vente)",c:8,d:"Prix de vente encaissé ou à recevoir lors de la cession d'une immobilisation.",g:["cession","prix","vente","HAO","produit"],u:"Prix de vente d'une immobilisation.",e:"Ex : machine vendue 1 000 000 F → Crédit <code>821</code> 1 000 000 / Débit <code>485</code>."},
+{n:"831",t:"Charges HAO constatées (pénalités, amendes)",c:8,d:"Charges exceptionnelles hors activité : amendes fiscales, pénalités, sinistres.",g:["amende","pénalité","HAO","exceptionnel","sanction"],u:"Amendes fiscales, pénalités exceptionnelles.",e:"Ex : pénalité impôts 75 000 F → Débit <code>831</code> / Crédit <code>521</code>."},
+{n:"841",t:"Produits HAO constatés (dons reçus, annulations)",c:8,d:"Produits exceptionnels hors activité : dons reçus, dettes abandonnées par un créancier.",g:["don","HAO","exceptionnel","produit","abandon"],u:"Produits exceptionnels non liés à l'activité.",e:"Ex : abandon de dette par fournisseur → Crédit <code>841</code>."},
+{n:"851",t:"Dotations HAO (amortissements, provisions)",c:8,d:"Dotations exceptionnelles : amortissements et provisions hors exploitation.",g:["dotation","HAO","provision","amortissement","exceptionnel"],u:"Amortissements et provisions exceptionnels.",e:"Ex : dépréciation exceptionnelle → Débit <code>851</code>."},
+{n:"861",t:"Reprises de provisions HAO",c:8,d:"Reprises de provisions constituées hors activités ordinaires.",g:["reprise","HAO","provision"],u:"Reprise d'une provision exceptionnelle.",e:"Ex : reprise provision HAO → Crédit <code>861</code>."},
+{n:"871",t:"Participation des travailleurs aux bénéfices",c:8,d:"Part du bénéfice légalement ou contractuellement reversée aux salariés.",g:["participation","salarié","bénéfice","intéressement"],u:"Part du bénéfice reversée aux salariés.",e:"Ex : participation 400 000 F → Débit <code>871</code> / Crédit <code>422</code>."},
+{n:"881",t:"Subventions d'équilibre reçues",c:8,d:"Subventions reçues pour compenser un déficit ou équilibrer le résultat.",g:["subvention","équilibre","aide","déficit"],u:"Aides pour compenser un déficit.",e:"Ex : subvention mairie 500 000 F → Crédit <code>881</code>."},
+{n:"891",t:"Impôts sur le résultat (IS / BIC)",c:8,d:"Impôt calculé sur le bénéfice imposable de l'exercice : IS ou BIC.",g:["impôt","IS","BIC","résultat","bénéfice","fiscal"],u:"Impôt sur les bénéfices de l'exercice.",e:"Ex : IS 900 000 F → Débit <code>891</code> / Crédit <code>441</code>."},
+{n:"895",t:"Impôt minimum forfaitaire (IMF)",c:8,d:"Impôt minimum exigible même en l'absence de bénéfice ou en cas de perte.",g:["IMF","minimum","forfaitaire","impôt","fiscal"],u:"Impôt minimum même en cas de perte.",e:"Ex : IMF 200 000 F → Débit <code>895</code>."},
+];
+
+const CLASSES = [
+ {id:0,label:"Tous"},
+ {id:1,label:"1 · Capitaux"},
+ {id:2,label:"2 · Immobilisations"},
+ {id:3,label:"3 · Stocks"},
+ {id:4,label:"4 · Tiers"},
+ {id:5,label:"5 · Trésorerie"},
+ {id:6,label:"6 · Charges"},
+ {id:7,label:"7 · Produits"},
+ {id:8,label:"8 · HAO"},
+];
+const CLASS_NAMES = {1:"Ressources durables — Capitaux",2:"Actif immobilisé",3:"Stocks",4:"Tiers",5:"Trésorerie",6:"Charges des activités ordinaires",7:"Produits des activités ordinaires",8:"Autres charges & produits HAO"};
+let activeClass = 0, query = "";
+const grid = document.getElementById('grid');
+const spot = document.getElementById('spotlight');
+const countEl = document.getElementById('count');
+const emptyEl = document.getElementById('empty');
+const filtersEl = document.getElementById('filters');
+const searchInput = document.getElementById('search');
+const suggestEl = document.getElementById('suggest');
+const kickerEl = document.getElementById('result-kicker');
+document.getElementById('st-total').textContent = COMPTES.length;
+
+function norm(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function hit(c,q){
+  if(!q) return false;
+  return norm(c.n).includes(q) || norm(c.t).includes(q) || norm(c.u).includes(q)
+      || norm(c.d||"").includes(q) || (c.g||[]).some(t=>norm(t).includes(q));
+}
+function filtered(){
+  const q = norm(query).trim();
+  return COMPTES.filter(c => (activeClass===0 || c.c===activeClass) && (!q || hit(c,q)));
+}
+/* Le meilleur résultat : correspondance exacte du numéro d'abord, sinon 1er résultat */
+function bestMatch(list){
+  const q = norm(query).trim();
+  if(!q) return null;
+  return list.find(c=>norm(c.n)===q) || list.find(c=>norm(c.n).startsWith(q)) || list[0] || null;
+}
+function esc(s){return s.replace(/'/g,"\\'");}
+function renderFilters(){
+  filtersEl.innerHTML = CLASSES.map(cl=>`<button class="fbtn ${activeClass===cl.id?'active':''}" onclick="setClass(${cl.id})">${cl.label}</button>`).join('');
+}
+function cardHTML(c,hl){
+  return `<article class="card">
+    <div class="card-top"><div class="num ${hl?'hit':''}">${c.n}</div>
+      <div><div class="cls">Classe ${c.c} · SYSCOHADA</div><h3>${c.t}</h3></div></div>
+    <div class="def"><b>Définition</b>${c.d||""}</div>
+    <div class="use"><b>Utilité</b>${c.u}</div>
+    <div class="ex"><b>Exemple</b>${c.e}</div>
+    <div class="card-foot"><button class="copy" onclick="copyNum('${c.n}')">Copier le n° ${c.n}</button></div>
+  </article>`;
+}
+/* ===== Encadré centré : le compte trouvé, affiché en grand ===== */
+function renderSpotlight(list){
+  const q = query.trim();
+  if(!q && activeClass===0){
+    kickerEl.textContent = "Meilleure correspondance — en direct";
+    spot.innerHTML = `<div class="result-none">⌕ <b>Tapez un numéro ou un mot-clé ci-dessus</b><br><span style="color:var(--muted)">Le compte correspondant s'affichera ici, en grand et centré — avec son utilité et un exemple.</span></div>`;
+    return;
+  }
+  const best = bestMatch(list);
+  if(!best){
+    kickerEl.textContent = "Aucune correspondance";
+    spot.innerHTML = `<div class="result-none"><b>Aucun compte trouvé pour « ${q} »${activeClass?` (classe ${activeClass})`:""}</b><br><span style="color:var(--muted)">Essayez « client », « 521 », « salaire », « TVA »…</span></div>`;
+    return;
+  }
+  const extra = list.length>1 ? ` · + ${list.length-1} autre(s) plus bas ↓` : "";
+  kickerEl.textContent = `Résultat pour « ${q} » — ${list.length} compte(s)${extra}`;
+  spot.innerHTML = `<div class="result-card">
+    <div class="r-num">Compte ${best.n}</div>
+    <h2><span class="n">${best.n}</span> — ${best.t}</h2>
+    <div class="r-class">Classe ${best.c} · ${CLASS_NAMES[best.c]}</div>
+    <div class="result-rows">
+      <div class="rr"><b>📖 Définition — qu'est-ce que c'est ?</b>${best.d||""}</div>
+      <div class="rr"><b>💡 Utilité — à quoi sert ce compte ?</b>${best.u}</div>
+      <div class="rr"><b>📝 Exemple d'écriture</b>${best.e}</div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary btn-md" onclick="copyNum('${best.n}')">Copier le n° ${best.n}</button>
+      <button class="btn btn-ghost btn-md" onclick="goList()">Voir dans la liste ↓</button>
+    </div>
+  </div>`;
+}
+function render(){
+  const list = filtered();
+  countEl.textContent = list.length;
+  const q = norm(query).trim();
+  grid.innerHTML = list.map(c=>cardHTML(c, hit(c,q))).join('');
+  emptyEl.style.display = list.length ? 'none' : 'block';
+  if(!list.length) document.getElementById('empty-txt').textContent = `Aucun résultat pour « ${query} » ${activeClass?`(classe ${activeClass})`:""}.`;
+  renderSpotlight(list);
+}
+function setClass(id){activeClass=id;renderFilters();render();}
+function goResult(){document.getElementById('resultat').scrollIntoView({behavior:'smooth'});}
+function goList(){document.getElementById('liste').scrollIntoView({behavior:'smooth'});}
+function quick(q){searchInput.value=q;query=q;activeClass=0;renderFilters();render();goResult();}
+function resetSearch(){searchInput.value="";query="";activeClass=0;renderFilters();render();}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+function copyNum(n){if(navigator.clipboard) navigator.clipboard.writeText(n).then(()=>toast(`Compte ${n} copié ✓`)).catch(()=>toast(`Compte ${n}`)); else toast(`Compte ${n}`);}
+searchInput.addEventListener('input', e=>{
+  query = e.target.value; render();
+  const q = e.target.value.trim();
+  if(q.length < 1){suggestEl.style.display='none';return;}
+  const top = filtered().slice(0,6);
+  if(!top.length){suggestEl.style.display='none';return;}
+  suggestEl.innerHTML = top.map(c=>`<button onclick="quick('${c.n}')"><span class="num">${c.n}</span><span class="lbl">${c.t}</span></button>`).join('');
+  suggestEl.style.display='block';
+});
+searchInput.addEventListener('keydown', e=>{ if(e.key==='Enter') goResult(); if(e.key==='Escape') suggestEl.style.display='none'; });
+searchInput.addEventListener('focus', ()=>{ if(searchInput.value.trim()) suggestEl.style.display='block'; });
+document.addEventListener('click', e=>{ if(!e.target.closest('.search-zone')) suggestEl.style.display='none'; });
+renderFilters(); render();
+</script>
+</body>
+</html>
