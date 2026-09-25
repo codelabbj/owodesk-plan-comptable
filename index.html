@@ -144,6 +144,24 @@ a{color:var(--brand);text-decoration:none}
 @media(max-width:600px){.mkt-footer-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}.wrap,.mkt-header-inner{padding:0 18px}.hero-inner{padding:60px 18px 54px}.result-card{padding:28px 20px}}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--plate);color:#fff;padding:13px 22px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:99;border:1px solid var(--brand)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ===== Langue FR/EN ===== */
+.lang-switch{display:flex;border:1px solid var(--plate)}
+.lang-switch button{font-family:var(--mono);font-size:12px;letter-spacing:.08em;background:transparent;border:0;padding:9px 12px;cursor:pointer;color:var(--ink-2);font-weight:600}
+.lang-switch button.active{background:var(--plate);color:#fff}
+/* ===== Contact / signalement d'erreur ===== */
+.contact-band{border-top:1px solid var(--line);background:var(--bg-alt);padding:64px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.contact-grid h2{font-size:clamp(26px,3.6vw,40px);margin:16px 0 12px}
+.contact-grid p{color:var(--ink-2);line-height:1.65;font-size:15px}
+.contact-direct{margin-top:14px!important}
+.contact-card{background:var(--bg-hi);border:1px solid var(--plate);box-shadow:6px 6px 0 var(--plate);padding:26px;display:grid;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.contact-card label{display:grid;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.contact-card input,.contact-card textarea{font-family:var(--font);font-size:15px;color:var(--ink);border:1px solid var(--plate);background:#fff;padding:12px 14px;border-radius:0;outline:none;width:100%;resize:vertical}
+.contact-card input:focus,.contact-card textarea:focus{box-shadow:3px 3px 0 var(--brand)}
+.contact-note{font-size:13px!important;color:var(--muted)!important}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.frow{grid-template-columns:1fr}.mkt-header-actions .btn{display:none}}
 </style>
 </head>
 <body>
@@ -152,46 +170,42 @@ a{color:var(--brand);text-decoration:none}
   <div class="mkt-header-inner">
     <a class="mkt-logo" href="#"><img src="./logo.png" alt="OwoDesk"><span class="mkt-logo-text">OwoDesk</span></a>
     <nav class="mkt-nav" aria-label="Principal">
-      <a href="#resultat">Résultat</a>
-      <a href="#liste" class="is-active">Plan comptable</a>
-      <a href="#classes">Classes 1 – 8</a>
+      <a href="#resultat" data-i18n="nav_result">Résultat</a>
+      <a href="#liste" class="is-active" data-i18n="nav_chart">Plan comptable</a>
+      <a href="#classes" data-i18n="nav_classes">Classes 1 – 8</a>
+      <a href="#contact" data-i18n="nav_contact">Signaler une erreur</a>
       <a href="https://www.owo.bj/" target="_blank" rel="noopener">OwoDesk ↓</a>
     </nav>
     <div class="mkt-header-actions">
-      <a href="https://www.owo.bj/register" target="_blank" rel="noopener" class="btn btn-primary btn-md">Essai gratuit</a>
+      <div class="lang-switch" role="group" aria-label="Langue / Language">
+        <button id="lang-fr" class="active" onclick="setLang('fr')">FR</button>
+        <button id="lang-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="https://www.owo.bj/register" target="_blank" rel="noopener" class="btn btn-primary btn-md" data-i18n="nav_trial">Essai gratuit</a>
     </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap hero-inner">
-    <span class="kicker"><i></i> SYSCOHADA révisé · Outil gratuit OwoDesk</span>
-    <h1 class="display">Plan Comptable <span class="hl">OHADA</span>,<br>simple et recherchable.</h1>
-    <p class="sub">Tapez un numéro ou un mot-clé — <strong>« client », « salaire », « caisse », « 521 »…</strong> — le bon compte s'affiche <strong>en grand, centré, juste en bas</strong> avec sa <strong>définition</strong>, son <strong>utilité</strong> et un <strong>exemple d'écriture</strong>. Tous les comptes restent listés plus bas sur la même page.</p>
+    <span class="kicker"><i></i> <span data-i18n="hero_kicker">SYSCOHADA révisé · Outil gratuit OwoDesk</span></span>
+    <h1 class="display" data-i18n="hero_title">Plan Comptable <span class="hl">OHADA</span>,<br>simple et recherchable.</h1>
+    <p class="sub" data-i18n="hero_sub">Tapez un numéro ou un mot-clé — <strong>« client », « salaire », « caisse », « 521 »…</strong> — le bon compte s'affiche <strong>en grand, centré, juste en bas</strong> avec sa <strong>définition</strong>, son <strong>utilité</strong> et un <strong>exemple d'écriture</strong>. Tous les comptes restent listés plus bas sur la même page.</p>
     <div class="search-zone">
       <div class="search-box">
         <span class="s-ico">⌕</span>
-        <input id="search" type="text" placeholder="Rechercher un compte… ex : 411, client, amortissement, TVA…" autocomplete="off">
-        <button onclick="goResult()">Voir ↓</button>
+        <input id="search" type="text" data-i18n-ph="search_ph" placeholder="Rechercher un compte… ex : 411, client, amortissement, TVA…" autocomplete="off">
+        <button onclick="goResult()" data-i18n="search_btn">Voir ↓</button>
       </div>
       <div class="suggest" id="suggest"></div>
-      <div class="tags">
-        <button onclick="quick('client')">client</button>
-        <button onclick="quick('fournisseur')">fournisseur</button>
-        <button onclick="quick('salaire')">salaire</button>
-        <button onclick="quick('caisse')">caisse</button>
-        <button onclick="quick('TVA')">TVA</button>
-        <button onclick="quick('amortissement')">amortissement</button>
-        <button onclick="quick('emprunt')">emprunt</button>
-        <button onclick="quick('vente')">vente</button>
-      </div>
+      <div class="tags" id="qtags"></div>
     </div>
     <div class="stats">
-      <div class="stat"><b><em id="st-total">0</em></b><span>comptes référencés</span></div>
-      <div class="stat"><b>8</b><span>classes SYSCOHADA</span></div>
-      <div class="stat"><b>17</b><span>pays OHADA</span></div>
+      <div class="stat"><b><em id="st-total">0</em></b><span data-i18n="stat_accounts">comptes référencés</span></div>
+      <div class="stat"><b>8</b><span data-i18n="stat_classes">classes SYSCOHADA</span></div>
+      <div class="stat"><b>17</b><span data-i18n="stat_countries">pays OHADA</span></div>
     </div>
-    <div class="scroll-hint">↓ Le résultat s'affiche centré ci-dessous ↓</div>
+    <div class="scroll-hint" data-i18n="scroll_hint">↓ Le résultat s'affiche centré ci-dessous ↓</div>
   </div>
 </section>
 
@@ -207,42 +221,64 @@ a{color:var(--brand);text-decoration:none}
 <main class="wrap section" id="liste">
   <div class="section-head" id="classes">
     <div>
-      <span class="kicker"><i></i> Référentiel complet · Classes 1 à 8</span>
-      <h2 class="display">Tous les comptes, sur la même page.</h2>
-      <p>Chaque carte affiche le <b>numéro</b>, l'<b>intitulé officiel</b>, la <b>définition</b>, l'<b>utilité</b> et un <b>exemple concret</b>. La recherche filtre cette liste sur tous ces champs, y compris les définitions et mots-clés associés, et le meilleur résultat reste affiché en grand dans l'encadré centré.</p>
+      <span class="kicker"><i></i> <span data-i18n="sec_kicker">Référentiel complet · Classes 1 à 8</span></span>
+      <h2 class="display" data-i18n="sec_title">Tous les comptes, sur la même page.</h2>
+      <p data-i18n="sec_sub">Chaque carte affiche le <b>numéro</b>, l'<b>intitulé officiel</b>, la <b>définition</b>, l'<b>utilité</b> et un <b>exemple concret</b>. La recherche filtre cette liste sur tous ces champs, y compris les définitions et mots-clés associés, et le meilleur résultat reste affiché en grand dans l'encadré centré.</p>
     </div>
-    <div class="count-pill"><b id="count">0</b> compte(s) affiché(s)</div>
+    <div class="count-pill"><b id="count">0</b> <span data-i18n="count_suffix">compte(s) affiché(s)</span></div>
   </div>
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" style="display:none"><b>Aucun compte trouvé</b><span id="empty-txt"></span><br><br><button class="btn btn-primary btn-md" onclick="resetSearch()">Réinitialiser la recherche</button></div>
+  <div class="empty" id="empty" style="display:none"><b data-i18n="empty_title">Aucun compte trouvé</b><span id="empty-txt"></span><br><br><button class="btn btn-primary btn-md" onclick="resetSearch()" data-i18n="empty_reset">Réinitialiser la recherche</button></div>
 </main>
+
+<!-- ===== CONTACT / SIGNALER UNE ERREUR ===== -->
+<section class="contact-band" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="kicker"><i></i> <span data-i18n="contact_kicker">Entraide · Qualité</span></span>
+      <h2 class="display" data-i18n="contact_title">Une erreur sur un compte ? Dites-le-nous.</h2>
+      <p data-i18n="contact_sub">Définition inexacte, mauvais exemple, compte manquant ? Envoyez-nous un signalement — notre équipe relit chaque message avant de corriger la page.</p>
+      <p class="contact-direct"><span data-i18n="contact_direct">ou écrivez-nous directement :</span> <a href="mailto:hello@codelab.bj">hello@codelab.bj</a></p>
+    </div>
+    <form class="contact-card" onsubmit="return sendReport(event)">
+      <div class="frow">
+        <label><span data-i18n="contact_name">Votre nom</span><input id="c-name" required data-i18n-ph="contact_name" placeholder="Votre nom"></label>
+        <label><span data-i18n="contact_email">Votre e-mail</span><input id="c-email" type="email" required data-i18n-ph="contact_email" placeholder="Votre e-mail"></label>
+      </div>
+      <label><span data-i18n="contact_account">N° du compte concerné</span><input id="c-account" inputmode="numeric" data-i18n-ph="contact_account" placeholder="N° du compte concerné (ex : 411)"></label>
+      <label><span data-i18n="contact_msg">Votre signalement</span><textarea id="c-msg" rows="4" required data-i18n-ph="contact_msg" placeholder="Décrivez l'erreur détectée…"></textarea></label>
+      <button class="btn btn-primary btn-lg" type="submit" data-i18n="contact_send">Envoyer le signalement</button>
+      <p class="contact-note" data-i18n="contact_note">Chaque signalement est relu par notre équipe avant correction. Merci !</p>
+    </form>
+  </div>
+</section>
 
 <footer class="mkt-footer">
   <div class="mkt-footer-grid">
     <div>
       <a class="mkt-logo" href="#"><img src="./logo.png" alt="OwoDesk"><span class="mkt-logo-text">OwoDesk</span></a>
-      <p><b style="color:#fff">Plan Comptable OHADA</b> — outil gratuit offert par <b style="color:#fff">OwoDesk</b>, l'ERP tout-en-un des entreprises africaines : facturation, stock, caisse, CRM, RH, comptabilité SYSCOHADA et Mobile Money.<br><br>Bénin · Côte d'Ivoire · Sénégal · Cameroun · Togo · Mali…</p>
+      <p data-i18n="foot_desc"><b style="color:#fff">Plan Comptable OHADA</b> — outil gratuit offert par <b style="color:#fff">OwoDesk</b>, l'ERP tout-en-un des entreprises africaines : facturation, stock, caisse, CRM, RH, comptabilité SYSCOHADA et Mobile Money.<br><br>Bénin · Côte d'Ivoire · Sénégal · Cameroun · Togo · Mali…</p>
     </div>
     <div class="mkt-footer-col">
-      <span class="mkt-footer-col-title">Classes</span>
+      <span class="mkt-footer-col-title" data-i18n="foot_classes">Classes</span>
       <a href="#liste">1 — Capitaux durables</a><a href="#liste">2 — Immobilisations</a><a href="#liste">3 — Stocks</a><a href="#liste">4 — Tiers</a><a href="#liste">5 — Trésorerie</a><a href="#liste">6 — Charges</a><a href="#liste">7 — Produits</a><a href="#liste">8 — HAO</a>
     </div>
     <div class="mkt-footer-col">
-      <span class="mkt-footer-col-title">Produit</span>
+      <span class="mkt-footer-col-title" data-i18n="foot_product">Produit</span>
       <a href="https://www.owo.bj/erp-ohada" target="_blank" rel="noopener">ERP OHADA multi-sociétés</a>
       <a href="https://www.owo.bj/comptabilite-syscohada" target="_blank" rel="noopener">Comptabilité SYSCOHADA</a>
       <a href="https://www.owo.bj/facturation-mecef-benin" target="_blank" rel="noopener">Facturation MECeF</a>
       <a href="https://www.owo.bj/#tarifs" target="_blank" rel="noopener">Tarifs</a>
     </div>
     <div class="mkt-footer-col">
-      <span class="mkt-footer-col-title">Société</span>
+      <span class="mkt-footer-col-title" data-i18n="foot_company">Société</span>
       <a href="https://codelab.bj" target="_blank" rel="noopener">CodeLab BJ, éditeur</a>
       <a href="mailto:hello@codelab.bj">hello@codelab.bj</a>
       <a href="https://aide.owo.bj" target="_blank" rel="noopener">Centre d'aide</a>
     </div>
   </div>
-  <div class="mkt-footer-bottom"><span>© 2026 OwoDesk — édité par CodeLab BJ · Cotonou, Bénin</span><span>Contenu pédagogique — vérifiez avec votre expert-comptable.</span></div>
+  <div class="mkt-footer-bottom"><span data-i18n="foot_bottom1">© 2026 OwoDesk — édité par CodeLab BJ · Cotonou, Bénin</span><span data-i18n="foot_bottom2">Contenu pédagogique — vérifiez avec votre expert-comptable.</span></div>
 </footer>
 <div class="toast" id="toast">Copié !</div>
 
@@ -398,18 +434,84 @@ const COMPTES = [
 {n:"895",t:"Impôt minimum forfaitaire (IMF)",c:8,d:"Impôt minimum exigible même en l'absence de bénéfice ou en cas de perte.",g:["IMF","minimum","forfaitaire","impôt","fiscal"],u:"Impôt minimum même en cas de perte.",e:"Ex : IMF 200 000 F → Débit <code>895</code>."},
 ];
 
-const CLASSES = [
- {id:0,label:"Tous"},
- {id:1,label:"1 · Capitaux"},
- {id:2,label:"2 · Immobilisations"},
- {id:3,label:"3 · Stocks"},
- {id:4,label:"4 · Tiers"},
- {id:5,label:"5 · Trésorerie"},
- {id:6,label:"6 · Charges"},
- {id:7,label:"7 · Produits"},
- {id:8,label:"8 · HAO"},
-];
-const CLASS_NAMES = {1:"Ressources durables — Capitaux",2:"Actif immobilisé",3:"Stocks",4:"Tiers",5:"Trésorerie",6:"Charges des activités ordinaires",7:"Produits des activités ordinaires",8:"Autres charges & produits HAO"};
+let lang = "fr";
+try{lang = localStorage.getItem("owo-pcg-lang") || "fr";}catch(e){}
+if(lang !== "fr" && lang !== "en") lang = "fr";
+const I18N = {
+fr: {
+  title: "Plan Comptable OHADA — par OwoDesk",
+  nav_result: "Résultat", nav_chart: "Plan comptable", nav_classes: "Classes 1 – 8", nav_contact: "Signaler une erreur", nav_trial: "Essai gratuit",
+  hero_kicker: "SYSCOHADA révisé · Outil gratuit OwoDesk",
+  hero_title: 'Plan Comptable <span class="hl">OHADA</span>,<br>simple et recherchable.',
+  hero_sub: "Tapez un numéro ou un mot-clé — <strong>« client », « salaire », « caisse », « 521 »…</strong> — le bon compte s'affiche <strong>en grand, centré, juste en bas</strong> avec sa <strong>définition</strong>, son <strong>utilité</strong> et un <strong>exemple d'écriture</strong>. Tous les comptes restent listés plus bas sur la même page.",
+  search_ph: "Rechercher un compte… ex : 411, client, amortissement, TVA…", search_btn: "Voir ↓",
+  stat_accounts: "comptes référencés", stat_classes: "classes SYSCOHADA", stat_countries: "pays OHADA",
+  scroll_hint: "↓ Le résultat s'affiche centré ci-dessous ↓",
+  res_idle_kicker: "Meilleure correspondance — en direct",
+  res_idle: "⌕ <b>Tapez un numéro ou un mot-clé ci-dessus</b>",
+  res_idle_sub: "Le compte correspondant s'affichera ici, en grand et centré — avec sa définition, son utilité et un exemple.",
+  sec_kicker: "Référentiel complet · Classes 1 à 8", sec_title: "Tous les comptes, sur la même page.",
+  sec_sub: "Chaque carte affiche le <b>numéro</b>, l'<b>intitulé officiel</b>, la <b>définition</b>, l'<b>utilité</b> et un <b>exemple concret</b>. La recherche filtre cette liste sur tous ces champs, y compris les définitions et mots-clés associés, et le meilleur résultat reste affiché en grand dans l'encadré centré.",
+  count_suffix: "compte(s) affiché(s)", empty_title: "Aucun compte trouvé", empty_reset: "Réinitialiser la recherche",
+  card_class: "Classe", card_def: "Définition", card_use: "Utilité", card_ex: "Exemple", card_copy: "Copier le n°",
+  spot_account: "Compte", spot_def: "📖 Définition — qu'est-ce que c'est ?", spot_use: "💡 Utilité — à quoi sert ce compte ?", spot_ex: "📝 Exemple d'écriture", spot_see: "Voir dans la liste ↓",
+  spot_for: "Résultat pour", spot_comptes: "compte(s)", spot_more: "autre(s) plus bas ↓", spot_none: "Aucune correspondance",
+  spot_nores: "Aucun compte trouvé pour", spot_try: "Essayez « client », « 521 », « salaire », « TVA »…",
+  copied: "copié ✓", account_word: "Compte",
+  filters: ["Tous","1 · Capitaux","2 · Immobilisations","3 · Stocks","4 · Tiers","5 · Trésorerie","6 · Charges","7 · Produits","8 · HAO"],
+  classnames: {1:"Ressources durables — Capitaux",2:"Actif immobilisé",3:"Stocks",4:"Tiers",5:"Trésorerie",6:"Charges des activités ordinaires",7:"Produits des activités ordinaires",8:"Autres charges & produits HAO"},
+  contact_kicker: "Entraide · Qualité", contact_title: "Une erreur sur un compte ? Dites-le-nous.",
+  contact_sub: "Définition inexacte, mauvais exemple, compte manquant ? Envoyez-nous un signalement — notre équipe relit chaque message avant de corriger la page.",
+  contact_direct: "ou écrivez-nous directement :", contact_name: "Votre nom", contact_email: "Votre e-mail",
+  contact_account: "N° du compte concerné", contact_account_ph: "N° du compte concerné (ex : 411)",
+  contact_msg: "Votre signalement", contact_msg_ph: "Décrivez l'erreur détectée…",
+  contact_send: "Envoyer le signalement", contact_note: "Chaque signalement est relu par notre équipe avant correction. Merci !",
+  foot_desc: "<b style=\"color:#fff\">Plan Comptable OHADA</b> — outil gratuit offert par <b style=\"color:#fff\">OwoDesk</b>, l'ERP tout-en-un des entreprises africaines : facturation, stock, caisse, CRM, RH, comptabilité SYSCOHADA et Mobile Money.<br><br>Bénin · Côte d'Ivoire · Sénégal · Cameroun · Togo · Mali…",
+  foot_classes: "Classes", foot_product: "Produit", foot_company: "Société",
+  foot_bottom1: "© 2026 OwoDesk — édité par CodeLab BJ · Cotonou, Bénin",
+  foot_bottom2: "Contenu pédagogique — vérifiez avec votre expert-comptable.",
+  mail_open: "Ouverture de votre messagerie…"
+},
+en: {
+  title: "OHADA Chart of Accounts — by OwoDesk",
+  nav_result: "Result", nav_chart: "Chart of accounts", nav_classes: "Classes 1–8", nav_contact: "Report an error", nav_trial: "Free trial",
+  hero_kicker: "Revised SYSCOHADA · Free OwoDesk tool",
+  hero_title: 'OHADA <span class="hl">Chart of Accounts</span>,<br>simple and searchable.',
+  hero_sub: "Type a number or a keyword — <strong>« customer », « salary », « cash », « 521 »…</strong> — the right account appears <strong>big, centered, just below</strong> with its <strong>definition</strong>, its <strong>purpose</strong> and a <strong>journal entry example</strong>. All accounts remain listed further down on the same page.",
+  search_ph: "Search an account… e.g. 411, customer, depreciation, VAT…", search_btn: "See ↓",
+  stat_accounts: "accounts listed", stat_classes: "SYSCOHADA classes", stat_countries: "OHADA countries",
+  scroll_hint: "↓ The result appears centered below ↓",
+  res_idle_kicker: "Best match — live",
+  res_idle: "⌕ <b>Type a number or a keyword above</b>",
+  res_idle_sub: "The matching account will appear here, big and centered — with its definition, purpose and an example.",
+  sec_kicker: "Complete chart · Classes 1 to 8", sec_title: "All accounts, on the same page.",
+  sec_sub: "Each card shows the <b>number</b>, the <b>official title</b> (in French), the <b>definition</b>, the <b>purpose</b> and a <b>concrete example</b>. Search filters this list across all these fields, and the best match stays displayed big in the centered box.",
+  count_suffix: "account(s) shown", empty_title: "No account found", empty_reset: "Reset search",
+  card_class: "Class", card_def: "Definition", card_use: "Purpose", card_ex: "Example", card_copy: "Copy no.",
+  spot_account: "Account", spot_def: "📖 Definition — what is it?", spot_use: "💡 Purpose — what is this account for?", spot_ex: "📝 Journal entry example", spot_see: "See in the list ↓",
+  spot_for: "Result for", spot_comptes: "account(s)", spot_more: "more below ↓", spot_none: "No match",
+  spot_nores: "No account found for", spot_try: "Try « customer », « 521 », « salary », « VAT »…",
+  copied: "copied ✓", account_word: "Account",
+  filters: ["All","1 · Capital","2 · Fixed assets","3 · Inventory","4 · Third parties","5 · Cash & bank","6 · Expenses","7 · Revenue","8 · Extraordinary"],
+  classnames: {1:"Long-term resources — Capital",2:"Fixed assets",3:"Inventory",4:"Third parties",5:"Cash and banks",6:"Operating expenses",7:"Operating revenue",8:"Extraordinary items (HAO)"},
+  contact_kicker: "Community · Quality", contact_title: "Spotted a mistake on an account? Tell us.",
+  contact_sub: "Wrong definition, bad example, missing account? Send us a report — our team reviews every message before fixing the page.",
+  contact_direct: "or write to us directly:", contact_name: "Your name", contact_email: "Your e-mail",
+  contact_account: "Account no. concerned", contact_account_ph: "Account no. concerned (e.g. 411)",
+  contact_msg: "Your report", contact_msg_ph: "Describe the error you spotted…",
+  contact_send: "Send report", contact_note: "Every report is reviewed by our team before correction. Thank you!",
+  foot_desc: "<b style=\"color:#fff\">OHADA Chart of Accounts</b> — a free tool by <b style=\"color:#fff\">OwoDesk</b>, the all-in-one ERP for African businesses: invoicing, inventory, POS, CRM, HR, SYSCOHADA accounting and Mobile Money.<br><br>Benin · Ivory Coast · Senegal · Cameroon · Togo · Mali…",
+  foot_classes: "Classes", foot_product: "Product", foot_company: "Company",
+  foot_bottom1: "© 2026 OwoDesk — published by CodeLab BJ · Cotonou, Benin",
+  foot_bottom2: "Educational content — always check with your accountant.",
+  mail_open: "Opening your mail app…"
+}
+};
+function T(k){return (I18N[lang] && I18N[lang][k] !== undefined) ? I18N[lang][k] : I18N.fr[k];}
+/* Synonymes anglais → français pour la recherche (comparés sans accents) */
+const SYN = {"customer":"client","customers":"client","receivable":"client","receivables":"client","supplier":"fournisseur","suppliers":"fournisseur","payable":"fournisseur","payables":"fournisseur","salary":"salaire","salaries":"salaire","payroll":"salaire","pay":"salaire","wage":"salaire","wages":"salaire","employee":"salarie","employees":"personnel","cash":"caisse","money":"caisse","bank":"banque","banks":"banque","tax":"impot","taxes":"impot","vat":"tva","sale":"vente","sales":"vente","turnover":"chiffre","purchase":"achat","purchases":"achat","buying":"achat","stock":"stock","inventory":"stock","loan":"emprunt","loans":"emprunt","borrowing":"emprunt","rent":"loyer","rents":"loyer","lease":"credit-bail","leasing":"leasing","insurance":"assurance","transport":"transport","shipping":"transport","delivery":"livraison","freight":"fret","invoice":"facture","invoices":"facture","bill":"facture","capital":"capital","equity":"capitaux","profit":"benefice","loss":"perte","losses":"perte","deficit":"deficit","expense":"charge","expenses":"charge","cost":"charge","revenue":"produit","income":"produit","gain":"gain","interest":"interet","depreciation":"amortissement","amortization":"amortissement","provision":"provision","reserve":"reserve","software":"logiciel","patent":"brevet","licence":"licence","license":"licence","vehicle":"vehicule","vehicles":"vehicule","car":"voiture","building":"batiment","buildings":"batiment","land":"terrain","office":"bureau","shop":"boutique","store":"magasin","equipment":"materiel","machine":"machine","machines":"machine","furniture":"mobilier","phone":"telephone","internet":"internet","advertising":"publicite","marketing":"marketing","maintenance":"entretien","repair":"reparation","repairs":"reparation","fee":"honoraire","fees":"honoraire","consulting":"conseil","consultant":"conseil","donation":"don","donations":"don","grant":"subvention","subsidy":"subvention","fine":"amende","penalty":"penalite","penalties":"penalite","advance":"avance","deposit":"caution","downpayment":"acompte","check":"cheque","transfer":"virement","overdraft":"decouvert","discount":"escompte","exchange":"change","currency":"devise","dollar":"dollar","euro":"euro","dividend":"dividende","subsidiary":"filiale","share":"action","shares":"action","investment":"investissement","order":"commande","payment":"paiement","collection":"encaisse","doubtful":"douteux","unpaid":"impaye","raw":"matiere","materials":"matiere","packaging":"emballage","electricity":"electricite","water":"eau","post":"poste","treasury":"tresor","training":"formation","school":"ecole","retirement":"retraite","mutual":"mutuelle","import":"import","export":"export","transit":"transit","construction":"construction","work":"travaux","study":"etude","research":"recherche","development":"developpement","goodwill":"fonds","participation":"participation","extraordinary":"hao","exceptional":"exceptionnel","minimum":"minimum","flat":"forfaitaire"};
+const QUICK = {fr:["client","fournisseur","salaire","caisse","TVA","amortissement","emprunt","vente"],en:["customer","supplier","salary","cash","VAT","depreciation","loan","sale"]};
+const CLASS_IDS = [0,1,2,3,4,5,6,7,8];
 let activeClass = 0, query = "";
 const grid = document.getElementById('grid');
 const spot = document.getElementById('spotlight');
@@ -422,6 +524,7 @@ const kickerEl = document.getElementById('result-kicker');
 document.getElementById('st-total').textContent = COMPTES.length;
 
 function norm(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function expandQ(q){if(!q) return q;return q.split(/\s+/).map(w=>SYN[w]||w).join(" ");}
 function hit(c,q){
   if(!q) return false;
   return norm(c.n).includes(q) || norm(c.t).includes(q) || norm(c.u).includes(q)
@@ -429,7 +532,8 @@ function hit(c,q){
 }
 function filtered(){
   const q = norm(query).trim();
-  return COMPTES.filter(c => (activeClass===0 || c.c===activeClass) && (!q || hit(c,q)));
+  const qe = expandQ(q);
+  return COMPTES.filter(c => (activeClass===0 || c.c===activeClass) && (!q || hit(c,q) || (qe!==q && hit(c,qe))));
 }
 /* Le meilleur résultat : correspondance exacte du numéro d'abord, sinon 1er résultat */
 function bestMatch(list){
@@ -439,46 +543,46 @@ function bestMatch(list){
 }
 function esc(s){return s.replace(/'/g,"\\'");}
 function renderFilters(){
-  filtersEl.innerHTML = CLASSES.map(cl=>`<button class="fbtn ${activeClass===cl.id?'active':''}" onclick="setClass(${cl.id})">${cl.label}</button>`).join('');
+  filtersEl.innerHTML = CLASS_IDS.map(id=>`<button class="fbtn ${activeClass===id?'active':''}" onclick="setClass(${id})">${T("filters")[id]}</button>`).join('');
 }
 function cardHTML(c,hl){
   return `<article class="card">
     <div class="card-top"><div class="num ${hl?'hit':''}">${c.n}</div>
-      <div><div class="cls">Classe ${c.c} · SYSCOHADA</div><h3>${c.t}</h3></div></div>
-    <div class="def"><b>Définition</b>${c.d||""}</div>
-    <div class="use"><b>Utilité</b>${c.u}</div>
-    <div class="ex"><b>Exemple</b>${c.e}</div>
-    <div class="card-foot"><button class="copy" onclick="copyNum('${c.n}')">Copier le n° ${c.n}</button></div>
+      <div><div class="cls">${T("card_class")} ${c.c} · SYSCOHADA</div><h3>${c.t}</h3></div></div>
+    <div class="def"><b>${T("card_def")}</b>${c.d||""}</div>
+    <div class="use"><b>${T("card_use")}</b>${c.u}</div>
+    <div class="ex"><b>${T("card_ex")}</b>${c.e}</div>
+    <div class="card-foot"><button class="copy" onclick="copyNum('${c.n}')">${T("card_copy")} ${c.n}</button></div>
   </article>`;
 }
 /* ===== Encadré centré : le compte trouvé, affiché en grand ===== */
 function renderSpotlight(list){
   const q = query.trim();
   if(!q && activeClass===0){
-    kickerEl.textContent = "Meilleure correspondance — en direct";
-    spot.innerHTML = `<div class="result-none">⌕ <b>Tapez un numéro ou un mot-clé ci-dessus</b><br><span style="color:var(--muted)">Le compte correspondant s'affichera ici, en grand et centré — avec son utilité et un exemple.</span></div>`;
+    kickerEl.textContent = T("res_idle_kicker");
+    spot.innerHTML = `<div class="result-none">${T("res_idle")}<br><span style="color:var(--muted)">${T("res_idle_sub")}</span></div>`;
     return;
   }
   const best = bestMatch(list);
   if(!best){
-    kickerEl.textContent = "Aucune correspondance";
-    spot.innerHTML = `<div class="result-none"><b>Aucun compte trouvé pour « ${q} »${activeClass?` (classe ${activeClass})`:""}</b><br><span style="color:var(--muted)">Essayez « client », « 521 », « salaire », « TVA »…</span></div>`;
+    kickerEl.textContent = T("spot_none");
+    spot.innerHTML = `<div class="result-none"><b>${T("spot_nores")} « ${q} »${activeClass?` (${T("card_class")} ${activeClass})`:""}</b><br><span style="color:var(--muted)">${T("spot_try")}</span></div>`;
     return;
   }
-  const extra = list.length>1 ? ` · + ${list.length-1} autre(s) plus bas ↓` : "";
-  kickerEl.textContent = `Résultat pour « ${q} » — ${list.length} compte(s)${extra}`;
+  const extra = list.length>1 ? ` · + ${list.length-1} ${T("spot_more")}` : "";
+  kickerEl.textContent = `${T("spot_for")} « ${q} » — ${list.length} ${T("spot_comptes")}${extra}`;
   spot.innerHTML = `<div class="result-card">
-    <div class="r-num">Compte ${best.n}</div>
+    <div class="r-num">${T("spot_account")} ${best.n}</div>
     <h2><span class="n">${best.n}</span> — ${best.t}</h2>
-    <div class="r-class">Classe ${best.c} · ${CLASS_NAMES[best.c]}</div>
+    <div class="r-class">${T("card_class")} ${best.c} · ${T("classnames")[best.c]}</div>
     <div class="result-rows">
-      <div class="rr"><b>📖 Définition — qu'est-ce que c'est ?</b>${best.d||""}</div>
-      <div class="rr"><b>💡 Utilité — à quoi sert ce compte ?</b>${best.u}</div>
-      <div class="rr"><b>📝 Exemple d'écriture</b>${best.e}</div>
+      <div class="rr"><b>${T("spot_def")}</b>${best.d||""}</div>
+      <div class="rr"><b>${T("spot_use")}</b>${best.u}</div>
+      <div class="rr"><b>${T("spot_ex")}</b>${best.e}</div>
     </div>
     <div class="result-actions">
-      <button class="btn btn-primary btn-md" onclick="copyNum('${best.n}')">Copier le n° ${best.n}</button>
-      <button class="btn btn-ghost btn-md" onclick="goList()">Voir dans la liste ↓</button>
+      <button class="btn btn-primary btn-md" onclick="copyNum('${best.n}')">${T("card_copy")} ${best.n}</button>
+      <button class="btn btn-ghost btn-md" onclick="goList()">${T("spot_see")}</button>
     </div>
   </div>`;
 }
@@ -486,9 +590,11 @@ function render(){
   const list = filtered();
   countEl.textContent = list.length;
   const q = norm(query).trim();
-  grid.innerHTML = list.map(c=>cardHTML(c, hit(c,q))).join('');
+  const qe = expandQ(q);
+  const isHit = c => !!q && (hit(c,q) || (qe!==q && hit(c,qe)));
+  grid.innerHTML = list.map(c=>cardHTML(c, isHit(c))).join('');
   emptyEl.style.display = list.length ? 'none' : 'block';
-  if(!list.length) document.getElementById('empty-txt').textContent = `Aucun résultat pour « ${query} » ${activeClass?`(classe ${activeClass})`:""}.`;
+  if(!list.length) document.getElementById('empty-txt').textContent = `${T("spot_nores")} « ${query} » ${activeClass?`(${T("card_class")} ${activeClass})`:""}.`;
   renderSpotlight(list);
 }
 function setClass(id){activeClass=id;renderFilters();render();}
@@ -497,7 +603,7 @@ function goList(){document.getElementById('liste').scrollIntoView({behavior:'smo
 function quick(q){searchInput.value=q;query=q;activeClass=0;renderFilters();render();goResult();}
 function resetSearch(){searchInput.value="";query="";activeClass=0;renderFilters();render();}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
-function copyNum(n){if(navigator.clipboard) navigator.clipboard.writeText(n).then(()=>toast(`Compte ${n} copié ✓`)).catch(()=>toast(`Compte ${n}`)); else toast(`Compte ${n}`);}
+function copyNum(n){const msg = `${T("account_word")} ${n} ${T("copied")}`;if(navigator.clipboard) navigator.clipboard.writeText(n).then(()=>toast(msg)).catch(()=>toast(msg)); else toast(msg);}
 searchInput.addEventListener('input', e=>{
   query = e.target.value; render();
   const q = e.target.value.trim();
@@ -510,7 +616,28 @@ searchInput.addEventListener('input', e=>{
 searchInput.addEventListener('keydown', e=>{ if(e.key==='Enter') goResult(); if(e.key==='Escape') suggestEl.style.display='none'; });
 searchInput.addEventListener('focus', ()=>{ if(searchInput.value.trim()) suggestEl.style.display='block'; });
 document.addEventListener('click', e=>{ if(!e.target.closest('.search-zone')) suggestEl.style.display='none'; });
-renderFilters(); render();
+function setLang(l){lang = (l === "en") ? "en" : "fr";try{localStorage.setItem("owo-pcg-lang", lang);}catch(e){}applyLang();}
+function renderTags(){const el = document.getElementById("qtags");if(el) el.innerHTML = QUICK[lang].map(q=>`<button onclick="quick('${q}')">${q}</button>`).join("");}
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.title = T("title");
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const v = T(el.getAttribute("data-i18n"));if(v !== undefined) el.innerHTML = v;});
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{const v = T(el.getAttribute("data-i18n-ph"));if(v !== undefined) el.placeholder = v;});
+  document.getElementById("lang-fr").classList.toggle("active", lang === "fr");
+  document.getElementById("lang-en").classList.toggle("active", lang === "en");
+  renderTags(); renderFilters(); render();
+}
+function sendReport(e){
+  e.preventDefault();
+  const gv = id => document.getElementById(id).value.trim();
+  const a = gv("c-account");
+  const subject = (lang === "fr" ? "[Plan Comptable OHADA] Erreur signalée" : "[OHADA Chart] Error report") + (a ? " — " + (lang === "fr" ? "compte " : "account ") + a : "");
+  const body = (lang === "fr" ? "Nom : " : "Name: ") + gv("c-name") + "\nEmail : " + gv("c-email") + "\n" + (lang === "fr" ? "Compte : " : "Account: ") + a + "\n\n" + gv("c-msg");
+  window.location.href = "mailto:hello@codelab.bj?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  toast(T("mail_open"));
+  return false;
+}
+renderTags(); applyLang();
 </script>
 </body>
 </html>
